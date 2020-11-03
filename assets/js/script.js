@@ -3,6 +3,9 @@ var totalQuestions = 10;
 var timePenalty = 10;
 var rightOrWrong = "Correct!";
 
+//  This variable stores the global next question so the code knows where in the quiz we are
+var nextQuestion = 1;
+
 var timeRemainingEl = document.querySelector("#time-left");
 var righOrWrongEl = document.querySelector("#right-or-wrong");
 
@@ -147,23 +150,22 @@ var startMenuSetup = function() {
     timePenaltyEl.textContent = timePenalty;
 }
 var allQuestionSetup = function() {
-    var unusedBank = questionBank;
-    
+
     for (var i = 0; i < totalQuestions; i++) {
-        index = Math.random()*unusedBank.length;
+        index = Math.random()*questionBank.length;
         index = Math.floor(index);
-        usedBank.push(unusedBank[index])
+        usedBank.push(questionBank[index])
 
-        questionSetup(unusedBank[index], i+1)
+        questionSetup(questionBank[index], i+1)
 
-        unusedBank.splice(index, 1);
+        questionBank.splice(index, 1);
     }
 }
 // Setup Question to the side
 var questionSetup = function(questionObj, questionNumber) {
     // this creates the div container for the question content
     var questionDiv = document.createElement("div");
-    questionDiv.className = "question present";
+    questionDiv.className = "question waiting";
     questionDiv.id = "question-" + questionNumber;
     // Give html for header and prompt
     questionDiv.innerHTML = 
@@ -202,24 +204,31 @@ var createQuestionButtons = function(options) {
 // Functions called when the page content is clicked
 var buttonClick = function(event) {
     if (event.target.tagName.toLowerCase() === "button") {
+        
         switch (event.target.className) {
             case "start-quiz":
+                moveElements(event.target.closest(".start-menu"))
                 console.log("start quiz")
+                moveElements(document.querySelector("#question-" + nextQuestion))
+                nextQuestion++
                 break;
             case "option-button":
                 var promptEl = event.target.closest(".question")
                 var promptEl = promptEl.querySelector(".question-prompt")
                 var isRight = checkAnswer(promptEl.textContent, event.target.id[event.target.id.length-1])
+                moveElements(event.target.closest(".question"))
+                moveElements(document.querySelector("#question-" + nextQuestion))
+                nextQuestion++;
                 break;
         }
     }
 }
 // Check if answer that the user selected is correct
 var checkAnswer = function(prompt, userAnswer) {
-    for(var i = 0; i < questionBank.length; i++) {
-        if (questionBank[i].question === prompt) {
+    for(var i = 0; i < usedBank.length; i++) {
+        if (usedBank[i].question === prompt) {
             userAnswer = parseInt(userAnswer);
-            if (userAnswer === questionBank[i].answer) {
+            if (userAnswer === usedBank[i].answer) {
                 console.log("Correct");
                 return true
             } else {
@@ -229,9 +238,19 @@ var checkAnswer = function(prompt, userAnswer) {
         }
     }
 }
+// Apply styles to elements to move them
+var moveElements = function(element) {
+    if (element.classList.contains("waiting")){
+        element.classList.remove("waiting")
+        element.classList.add("present")
+    } else if (element.classList.contains("present")) {
+        element.classList.remove("present")
+        element.classList.add("completed")
+    }
+}
 
 // Call of the functions
 headerSetup();
 startMenuSetup();
-allQuestionSetup()
-mainContentEl.addEventListener("click",buttonClick)
+allQuestionSetup();
+mainContentEl.addEventListener("click",buttonClick);

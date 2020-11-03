@@ -61,7 +61,7 @@ header {
 .present {
     right: 0;
 }
-.complete {
+.completed {
     right: -100%;
 }
 
