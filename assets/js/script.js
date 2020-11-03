@@ -387,9 +387,11 @@ var checkAnswer = function(prompt, userAnswer) {
             if (userAnswer === usedBank[i].answer) {
                 console.log("Correct");
                 totalRight++;
+                displayRightOrWrong(true);
             } else {
                 penaltyTimer();
                 console.log("Incorrect");
+                displayRightOrWrong(false);
             }
         }
     }
@@ -444,7 +446,22 @@ var updateTime = function() {
 var stopTimer = function() {
     clearInterval(quizTimer)
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Right or Wrong Display in Footer
+var displayRightOrWrong = function(isCorrect) {
+    var footerDisplayEl = document.querySelector("#right-or-wrong")
+    if (isCorrect && footerDisplayEl) {
+        footerDisplayEl.textContent = "Correct"
+        setTimeout(clearRightOrWrongDisplay,2000)
+    } else if (!isCorrect && footerDisplayEl) {
+        footerDisplayEl.textContent = "Incorrect"
+        setTimeout(clearRightOrWrongDisplay,2000)
+    }
+}
+var clearRightOrWrongDisplay = function() {
+    var footerDisplayEl = document.querySelector("#right-or-wrong")
+    footerDisplayEl.textContent = ""
+}
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Local Storage Functions
 var receiveScores = function() {

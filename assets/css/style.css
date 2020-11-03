@@ -7,15 +7,25 @@ a {
     text-decoration: none;
     color: unset;
 }
-body {
-    overflow: hidden;
+html, body {
+    height: 100%
 }
-/* Preset style */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+/* Style for Header */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    height: 10%;
+    width: 100%;
 }
+/* style for start menu */
 .start-menu {
     display: flex;
     flex-direction: column;
@@ -25,6 +35,7 @@ header {
     position: absolute;
 
     top: 0;
+    height: 80%;
     width: 100%;
 }
 .start-menu h1, .start-menu p {
@@ -34,6 +45,9 @@ header {
 /* Style for questions */
 .page-content {
     position: relative;
+
+    height: 80%;
+    width: 100%;
 }
 .question {
     display: flex;
@@ -77,17 +91,22 @@ header {
     justify-content: center;
 }
 
+/* Style for footer */
+footer {
+    height: 10%;
+    width: 100%;
+}
+
 /* Style for waiting, present, complete */
 .waiting {
     right: 100%;
-    visibility: hidden;
+    display: none;
 }
 .present {
     right: 0;
-    visibility: visible;
 }
 .completed {
     right: -100%;
-    visibility: hidden;
+    display: none;
 }
 
