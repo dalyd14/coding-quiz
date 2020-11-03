@@ -151,10 +151,12 @@ var setupPage = function() {
     startMenuSetup();
     allQuestionSetup();
     mainContentEl.appendChild(endMenuSetup());
+    mainContentEl.appendChild(setupScoresTable());
 }
 var headerSetup = function() {
     timeRemainingEl.textContent = timeRemaining;
 }
+// setting up the starting menu
 var startMenuSetup = function() {
     var totalTimeEl = document.querySelector("span[id='time-total']")
     var totalQuestionsEl = document.querySelector("span[id='questions-total']")
@@ -164,86 +166,8 @@ var startMenuSetup = function() {
     totalQuestionsEl.textContent = totalQuestions;
     timePenaltyEl.textContent = timePenalty;
 }
-var endMenuSetup = function() {
-    // div wrapper for the whole end menu element
-    var endDiv = document.createElement("div");
-    endDiv.className = "end-menu waiting";
-    endDiv.id = "end-menu";
-    // insert some static html
-    endDiv.innerHTML = "<h1>You have completed the quiz!</h1>"
-    // create a h3 tag that will dsiplay a dynamic message
-    var resMessageEl = document.createElement("h3")
-    resMessageEl.className = "result-message"
-    resMessageEl.id = "result-message"
-    endDiv.appendChild(resMessageEl)
-    // create two paragraph tags that will carry details on how you did in the quiz
-    var p1 = document.createElement("p")
-    var p2 = document.createElement("p")
-    p1.innerHTML = "You got <span id='total-right'></span> out of <span id='questions-total'></span> questions correct"
-    p2.innerHTML = "You had <span id='time-left'></span> seconds remaining!"
-    endDiv.appendChild(p1)
-    endDiv.appendChild(p2)
-    // Add form to save the score to local storage
-    var scoreForm = document.createElement("form");
-    // Add form header
-    var scoreFormHeader = document.createElement("h4")
-    scoreFormHeader.innerHTML = "Would you like to save the score of <span id='total-score'></span>?"
-    // add text input
-    var scoreFormInitialInput = document.createElement("input")
-    scoreFormInitialInput.setAttribute("type", "text")
-    scoreFormInitialInput.setAttribute("placeholder", "Input Initials Here")
-    scoreFormInitialInput.className = "score-initial"
-    scoreFormInitialInput.id = "score-initial"
-    // add button
-    var scoreFormButton = document.createElement("button")
-    scoreFormButton.className = "initialButton"
-    scoreFormButton.textContent = "Save Score"
-    // Display past scores in div
-    var scoreDisplay = document.createElement("div")
-    scoreDisplay.className = "score-display"
-    scoreDisplay.id = "score-display"
-    // Append everything to form and then form to endDiv
-    scoreForm.appendChild(scoreFormHeader);
-    scoreForm.appendChild(scoreFormInitialInput);
-    scoreForm.appendChild(scoreFormButton);
-    scoreForm.appendChild(scoreDisplay)
-    endDiv.appendChild(scoreForm);
-
-    // Return this end menu
-    return endDiv
-}
-// Update end menu dynamic values on the page
-var updateEndMenu = function() {
-    var endMenu = document.querySelector("#end-menu")
-    if (endMenu) {
-        endMenu.querySelector("#result-message").textContent = updateResultMessage(totalRight, totalQuestions);
-        endMenu.querySelector("#total-right").textContent = totalRight;
-        endMenu.querySelector("#questions-total").textContent = totalQuestions;
-        endMenu.querySelector("#time-left").textContent = timeRemaining;
-        endMenu.querySelector("#total-score").textContent = (totalRight*2 + timeRemaining);
-
-        receiveScores();
-    }
-}
-var updateResultMessage = function(totalRightAnswers, totalPossibleQuestions) {
-    var resultMessage = ""
-    if (totalRightAnswers === totalPossibleQuestions) {
-        resultMessage = "Wow! you answered every question correctly!"
-    } else if (totalRightAnswers > (totalPossibleQuestions*.8)) {
-        resultMessage = "You did really well!"
-    } else if (totalRightAnswers > (totalPossibleQuestions*.6)) {
-        resultMessage = "Not bad, not bad."
-    } else if (totalRightAnswers > (totalPossibleQuestions*.4)) {
-        resultMessage = "There is room for improvement."
-    } else if (totalRightAnswers > (totalPossibleQuestions*.1)) {
-        resultMessage = "Yikes!"
-    } else {
-        resultMessage = "The cat must have walked across the keyboard..."
-    }
-    return resultMessage
-}
+// Setting up the questions for the quiz
 var allQuestionSetup = function() {
-
     for (var i = 0; i < totalQuestions; i++) {
         index = Math.random()*questionBank.length;
         index = Math.floor(index);
@@ -292,6 +216,122 @@ var createQuestionButtons = function(options) {
         // if the array was empty return false
         return false
     }
+}
+// Setting up the end menu element
+var endMenuSetup = function() {
+    // div wrapper for the whole end menu element
+    var endDiv = document.createElement("div");
+    endDiv.className = "end-menu waiting";
+    endDiv.id = "end-menu";
+    // insert some static html
+    endDiv.innerHTML = "<h1>You have completed the quiz!</h1>"
+    // create a h3 tag that will dsiplay a dynamic message
+    var resMessageEl = document.createElement("h3")
+    resMessageEl.className = "result-message"
+    resMessageEl.id = "result-message"
+    endDiv.appendChild(resMessageEl)
+    // create two paragraph tags that will carry details on how you did in the quiz
+    var p1 = document.createElement("p")
+    var p2 = document.createElement("p")
+    p1.innerHTML = "You got <span id='total-right'></span> out of <span id='questions-total'></span> questions correct"
+    p2.innerHTML = "You had <span id='time-left'></span> seconds remaining!"
+    endDiv.appendChild(p1)
+    endDiv.appendChild(p2)
+    // Add form to save the score to local storage
+    var scoreForm = document.createElement("form");
+    // Add form header
+    var scoreFormHeader = document.createElement("h4")
+    scoreFormHeader.innerHTML = "Would you like to save the score of <span id='total-score'></span>?"
+    // add text input
+    var scoreFormInitialInput = document.createElement("input")
+    scoreFormInitialInput.setAttribute("type", "text")
+    scoreFormInitialInput.setAttribute("placeholder", "Input Initials Here")
+    scoreFormInitialInput.className = "score-initial"
+    scoreFormInitialInput.id = "score-initial"
+    // add button
+    var scoreFormButton = document.createElement("button")
+    scoreFormButton.className = "initialButton"
+    scoreFormButton.textContent = "Save Score"
+    // Append everything to form and then form to endDiv
+    scoreForm.appendChild(scoreFormHeader);
+    scoreForm.appendChild(scoreFormInitialInput);
+    scoreForm.appendChild(scoreFormButton);
+    endDiv.appendChild(scoreForm);
+
+    // Return this end menu
+    return endDiv
+}
+// Update end menu dynamic values on the page
+var updateEndMenu = function() {
+    var endMenu = document.querySelector("#end-menu")
+    if (endMenu) {
+        endMenu.querySelector("#result-message").textContent = updateResultMessage(totalRight, totalQuestions);
+        endMenu.querySelector("#total-right").textContent = totalRight;
+        endMenu.querySelector("#questions-total").textContent = totalQuestions;
+        endMenu.querySelector("#time-left").textContent = timeRemaining;
+        endMenu.querySelector("#total-score").textContent = (totalRight*2 + timeRemaining);
+    }
+}
+var updateResultMessage = function(totalRightAnswers, totalPossibleQuestions) {
+    var resultMessage = ""
+    if (totalRightAnswers === totalPossibleQuestions) {
+        resultMessage = "Wow! you answered every question correctly!"
+    } else if (totalRightAnswers > (totalPossibleQuestions*.8)) {
+        resultMessage = "You did really well!"
+    } else if (totalRightAnswers > (totalPossibleQuestions*.6)) {
+        resultMessage = "Not bad, not bad."
+    } else if (totalRightAnswers > (totalPossibleQuestions*.4)) {
+        resultMessage = "There is room for improvement."
+    } else if (totalRightAnswers > (totalPossibleQuestions*.1)) {
+        resultMessage = "Yikes!"
+    } else {
+        resultMessage = "The cat must have walked across the keyboard..."
+    }
+    return resultMessage
+}
+var setupScoresTable = function() {
+    var scoresArray = receiveScores()
+
+    // div for display container
+    var scoreDisplay = document.createElement("div")
+    scoreDisplay.className = "score-display"
+    scoreDisplay.id = "score-display"
+
+    // Add a header
+    var scoreDisplayHeading = document.createElement("h1")
+    scoreDisplayHeading.textContent = "Here are the past scores..."
+    scoreDisplay.appendChild(scoreDisplayHeading)
+
+    // append the scores    
+    if (scoresArray){
+        // Sort scores Array from greates score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+        scoresArray = scoresArray.sort(function (a, b) {
+            return a.value - b.value;
+        })
+        scoreDisplay.appendChild(updateScoresTable(scoresArray));
+    }
+
+    return scoreDisplay
+}
+var updateScoresTable = function(scoresArray) {
+    var scoreDisplayGrid = document.createElement("div")
+
+    for (var i = 0; i < scoresArray.length; i++ ) {
+        var scoreDisplayItem = document.createElement("div")
+        scoreDisplayItem.className = "score-display-item"
+        var scoreDisplayItemInitials = document.createElement("p")
+        var scoreDisplayItemScore = document.createElement("p")
+        scoreDisplayItemInitials.className = "initials"
+        scoreDisplayItemScore.className = "score"
+        scoreDisplayItemInitials.textContent = scoresArray[i].initials
+        scoreDisplayItemScore.textContent = scoresArray[i].score
+        scoreDisplayItem.appendChild(scoreDisplayItemInitials)
+        scoreDisplayItem.appendChild(scoreDisplayItemScore)
+
+        scoreDisplayGrid.appendChild(scoreDisplayItem)
+    }
+
+    return scoreDisplayGrid
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
