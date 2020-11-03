@@ -7,7 +7,9 @@ a {
     text-decoration: none;
     color: unset;
 }
-
+body {
+    overflow: hidden;
+}
 /* Preset style */
 header {
     display: flex;
@@ -26,6 +28,20 @@ header {
     width: 100%;
 }
 .start-menu h1, .start-menu p {
+    text-align: center;
+}
+.end-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+
+    top: 0;
+    width: 100%;
+}
+.end-menu h1 {
     text-align: center;
 }
 
@@ -57,11 +73,14 @@ header {
 /* Style for waiting, present, complete */
 .waiting {
     right: 100%;
+    visibility: hidden;
 }
 .present {
     right: 0;
+    visibility: visible;
 }
 .completed {
     right: -100%;
+    visibility: hidden;
 }
 
