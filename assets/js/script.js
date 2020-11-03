@@ -364,12 +364,13 @@ var buttonClick = function(event) {
                     updateScores(scoresArray);
                     var newScoresArray = receiveScores();
                     if (newScoresArray){
+                        debugger;
                         // Sort scores Array from greates score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-                        scoresArray = scoresArray.sort(function (a, b) {
-                            return a.value - b.value;
+                        newScoresArray = newScoresArray.sort(function (a, b) {
+                            return b.score - a.score;
                         })
                         var scoreDisplayEl = document.querySelector("#score-display")
-                        scoreDisplayEl.appendChild(updateScoresTable(scoresArray));
+                        scoreDisplayEl.appendChild(updateScoresTable(newScoresArray));
                         moveElements(document.querySelector("#end-menu"))
                         moveElements(document.querySelector("#score-display"))
                     }
