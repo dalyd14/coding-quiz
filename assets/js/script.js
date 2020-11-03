@@ -5,6 +5,7 @@ var rightOrWrong = "Correct!";
 
 //  This variable stores the global next question so the code knows where in the quiz we are
 var nextQuestion = 1;
+var totalRight = 0;
 
 var timeRemainingEl = document.querySelector("#time-left");
 var righOrWrongEl = document.querySelector("#right-or-wrong");
@@ -149,6 +150,37 @@ var startMenuSetup = function() {
     totalQuestionsEl.textContent = totalQuestions;
     timePenaltyEl.textContent = timePenalty;
 }
+var endMenuSetup = function() {
+    var endDiv = document.createElement("div");
+    endDiv.className = "end-menu waiting";
+    endDiv.id = "end-menu";
+    endDiv.appendChild(document.createElement("h1").textContent(
+        "You have completed the quiz!"
+    ))
+    var resMessageEl = document.createElement("h3")
+    resMessageEl.className = "result-message"
+    resMessageEl.id = "result-message"
+    
+    endDiv.appendChild(resMessageEl)
+    
+}
+var updateResultMessage = function() {
+    var resultMessage = ""
+    if (totalRight === totalQuestions) {
+        resultMessage = "Wow! you answered ever questions correctly!"
+    } else if (totalRight > (totalQuestions*.8)) {
+        resultMessage = "You did really well!"
+    } else if (totalRight > (totalQuestions*.6)) {
+        resultMessage = "Not bad, not bad."
+    } else if (totalRight > (totalQuestions*.4)) {
+        resultMessage = "There is room for improvement."
+    } else if (totalRight > (totalQuestions*.1)) {
+        resultMessage = "Yikes!"
+    } else {
+        resultMessage = "The cat must have walked across the keyboard..."
+    }
+    return resultMessage
+}
 var allQuestionSetup = function() {
 
     for (var i = 0; i < totalQuestions; i++) {
@@ -215,7 +247,7 @@ var buttonClick = function(event) {
             case "option-button":
                 var promptEl = event.target.closest(".question")
                 var promptEl = promptEl.querySelector(".question-prompt")
-                var isRight = checkAnswer(promptEl.textContent, event.target.id[event.target.id.length-1])
+                checkAnswer(promptEl.textContent, event.target.id[event.target.id.length-1])
                 moveElements(event.target.closest(".question"))
                 moveElements(document.querySelector("#question-" + nextQuestion))
                 nextQuestion++;
@@ -230,10 +262,9 @@ var checkAnswer = function(prompt, userAnswer) {
             userAnswer = parseInt(userAnswer);
             if (userAnswer === usedBank[i].answer) {
                 console.log("Correct");
-                return true
+                totalRight++;
             } else {
                 console.log("Incorrect");
-                return false
             }
         }
     }
