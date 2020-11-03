@@ -419,7 +419,7 @@ var moveElements = function(element) {
 // When the timer runs out it should just skip to the end menu
 var skipToEnd = function() {
     updateEndMenu();
-    moveElements(document.querySelector(".present"))
+    moveElements(document.getElementsByClassName("question present"))
     moveElements(document.querySelector("#end-menu"))
 }
 
