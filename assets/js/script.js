@@ -7,7 +7,7 @@ var timeRemainingEl = document.querySelector("#time-left");
 var righOrWrongEl = document.querySelector("#right-or-wrong");
 
 var mainContentEl = document.querySelector("#page-content");
-
+///////////////////////////////////////////
 // Create Question Bank
 var questionBank = [
     {
@@ -29,9 +29,110 @@ var questionBank = [
             "option2d"
         ],
         answer: 1
+    },
+    {
+        question: "Here is question 3",
+        options: [
+            "option3a",
+            "option3b",
+            "option3c",
+            "option3d"
+        ],
+        answer: 2
+    },
+    {
+        question: "Here is question 4",
+        options: [
+            "option4a",
+            "option4b",
+            "option4c",
+            "option4d"
+        ],
+        answer: 1
+    },
+    {
+        question: "Here is question 5",
+        options: [
+            "option5a",
+            "option5b",
+            "option5c",
+            "option5d"
+        ],
+        answer: 2
+    },
+    {
+        question: "Here is question 6",
+        options: [
+            "option6a",
+            "option6b",
+            "option6c",
+            "option6d"
+        ],
+        answer: 1
+    },
+    {
+        question: "Here is question 7",
+        options: [
+            "option7a",
+            "option7b",
+            "option7c",
+            "option7d"
+        ],
+        answer: 2
+    },
+    {
+        question: "Here is question 8",
+        options: [
+            "option8a",
+            "option8b",
+            "option8c",
+            "option8d"
+        ],
+        answer: 1
+    },
+    {
+        question: "Here is question 9",
+        options: [
+            "option9a",
+            "option9b",
+            "option9c",
+            "option9d"
+        ],
+        answer: 2
+    },
+    {
+        question: "Here is question 10",
+        options: [
+            "option10a",
+            "option10b",
+            "option10c",
+            "option10d"
+        ],
+        answer: 1
+    },
+    {
+        question: "Here is question 11",
+        options: [
+            "option11a",
+            "option11b",
+            "option11c",
+            "option11d"
+        ],
+        answer: 2
+    },
+    {
+        question: "Here is question 12",
+        options: [
+            "option12a",
+            "option12b",
+            "option12c",
+            "option12d"
+        ],
+        answer: 1
     }
-]
-
+];
+var usedBank = [];
+//////////////////////////////////////////
 // Setup Functions
 var headerSetup = function() {
     timeRemainingEl.textContent = 60;
@@ -45,8 +146,20 @@ var startMenuSetup = function() {
     totalQuestionsEl.textContent = totalQuestions;
     timePenaltyEl.textContent = timePenalty;
 }
+var allQuestionSetup = function() {
+    var unusedBank = questionBank;
+    
+    for (var i = 0; i < totalQuestions; i++) {
+        index = Math.random()*unusedBank.length;
+        index = Math.floor(index);
+        usedBank.push(unusedBank[index])
 
-// Setup Questions to the side
+        questionSetup(unusedBank[index], i+1)
+
+        unusedBank.splice(index, 1);
+    }
+}
+// Setup Question to the side
 var questionSetup = function(questionObj, questionNumber) {
     // this creates the div container for the question content
     var questionDiv = document.createElement("div");
@@ -85,7 +198,7 @@ var createQuestionButtons = function(options) {
         return false
     }
 }
-
+/////////////////////////////////////////////////////
 // Functions called when the page content is clicked
 var buttonClick = function(event) {
     if (event.target.tagName.toLowerCase() === "button") {
@@ -101,6 +214,7 @@ var buttonClick = function(event) {
         }
     }
 }
+// Check if answer that the user selected is correct
 var checkAnswer = function(prompt, userAnswer) {
     for(var i = 0; i < questionBank.length; i++) {
         if (questionBank[i].question === prompt) {
@@ -119,5 +233,5 @@ var checkAnswer = function(prompt, userAnswer) {
 // Call of the functions
 headerSetup();
 startMenuSetup();
-questionSetup(questionBank[1],1)
+allQuestionSetup()
 mainContentEl.addEventListener("click",buttonClick)
