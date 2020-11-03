@@ -177,17 +177,17 @@ var endMenuSetup = function() {
     // Return this end menu
     return endDiv
 }
-var updateResultMessage = function() {
+var updateResultMessage = function(totalRightAnswers, totalPossibleQuestions) {
     var resultMessage = ""
-    if (totalRight === totalQuestions) {
+    if (totalRightAnswers === totalPossibleQuestions) {
         resultMessage = "Wow! you answered every question correctly!"
-    } else if (totalRight > (totalQuestions*.8)) {
+    } else if (totalRightAnswers > (totalPossibleQuestions*.8)) {
         resultMessage = "You did really well!"
-    } else if (totalRight > (totalQuestions*.6)) {
+    } else if (totalRightAnswers > (totalPossibleQuestions*.6)) {
         resultMessage = "Not bad, not bad."
-    } else if (totalRight > (totalQuestions*.4)) {
+    } else if (totalRightAnswers > (totalPossibleQuestions*.4)) {
         resultMessage = "There is room for improvement."
-    } else if (totalRight > (totalQuestions*.1)) {
+    } else if (totalRightAnswers > (totalPossibleQuestions*.1)) {
         resultMessage = "Yikes!"
     } else {
         resultMessage = "The cat must have walked across the keyboard..."
@@ -249,7 +249,6 @@ var createQuestionButtons = function(options) {
 // Functions called when the page content is clicked
 var buttonClick = function(event) {
     if (event.target.tagName.toLowerCase() === "button") {
-        
         switch (event.target.className) {
             case "start-quiz":
                 moveElements(event.target.closest(".start-menu"))
@@ -264,6 +263,7 @@ var buttonClick = function(event) {
                 
                 moveElements(event.target.closest(".question"))
                 if (nextQuestion > totalQuestions) {
+                    updateEndMenu();
                     moveElements(document.querySelector("#end-menu"))
                 } else {
                     moveElements(document.querySelector("#question-" + nextQuestion))
@@ -271,8 +271,6 @@ var buttonClick = function(event) {
                 }
                 break;
         }
-
-
     }
 }
 // Check if answer that the user selected is correct
@@ -303,7 +301,13 @@ var moveElements = function(element) {
 //////////////////////////////////////////////
 // Update end menu dynamic values on the page
 var updateEndMenu = function() {
-    document.querySelector()
+    var endMenu = document.querySelector("#end-menu")
+    if (endMenu) {
+        endMenu.querySelector("#result-message").textContent = updateResultMessage(totalRight, totalQuestions)
+        endMenu.querySelector("#total-right").textContent = totalRight
+        endMenu.querySelector("#questions-total").textContent = totalQuestions
+        endMenu.querySelector("#time-left").textContent = "Change this"
+    }
 }
 
 // Call of the functions
