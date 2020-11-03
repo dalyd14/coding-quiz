@@ -3,9 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Coding Quiz</title>
 </head>
 <body>
-    
+    <!-- Where I will allow them to view high score and the timer; I also may keep up with their score -->
+    <header>
+        <a href="">
+            View High Scores
+        </a>
+        <div>
+            Time Remaining: <span id="time-left"></span>
+        </div>
+    </header>
+    <!-- Where I will display the questions and their answers -->
+    <main class="page-content" id="page-content">
+        <div class="start-menu" id="start-menu">
+            <h2>Welcome to David Daly's Coding Quiz</h2>
+            <p>
+                When you are ready, please select "Start Quiz". 
+                You will have <span id="time-total"></span> seconds to answer <span id="questions-total"></span> questions.
+                Every question you answer incorrectly you will lose <span id="time-penalty"></span> seconds.
+            </p>
+            <button class="start-quiz">
+                Start Quiz
+            </button>
+        </div>
+    </main>
+    <!-- Where I will display right or wrong -->
+    <footer>
+        <div class="right-or-wrong">
+            <h3 id="right-or-wrong"></h4>
+        </div>
+    </footer>
+    <script src="./assets/js/script.js"></script>
 </body>
 </html>
