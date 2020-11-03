@@ -1,16 +1,24 @@
+///////////////////////////////////////////////////////////////////////////////
+// These are global static constants
 var totalTime = 60;
 var totalQuestions = 10;
 var timePenalty = 10;
-var rightOrWrong = "Correct!";
 
-//  This variable stores the global next question so the code knows where in the quiz we are
+// This is a dynamic variable that stores the global next question so the code knows where in the quiz we are
 var nextQuestion = 1;
+// This is a dynamic variable that stores the global correct answers received
 var totalRight = 0;
+// This is dynamic variable that store the global time remaining
+var timeRemaining = totalTime;
+var quizTimer = null // this will hold the interval
 
+// These are global references to the time-left header and footer right or wrong indicator (these references will remain unchanged throughout the use)
 var timeRemainingEl = document.querySelector("#time-left");
 var righOrWrongEl = document.querySelector("#right-or-wrong");
 
+// This is a reference to where all the content will live
 var mainContentEl = document.querySelector("#page-content");
+
 ///////////////////////////////////////////
 // Create Question Bank
 var questionBank = [
@@ -145,7 +153,7 @@ var setupPage = function() {
     mainContentEl.appendChild(endMenuSetup());
 }
 var headerSetup = function() {
-    timeRemainingEl.textContent = 60;
+    timeRemainingEl.textContent = timeRemaining;
 }
 var startMenuSetup = function() {
     var totalTimeEl = document.querySelector("span[id='time-total']")
@@ -176,6 +184,16 @@ var endMenuSetup = function() {
 
     // Return this end menu
     return endDiv
+}
+// Update end menu dynamic values on the page
+var updateEndMenu = function() {
+    var endMenu = document.querySelector("#end-menu")
+    if (endMenu) {
+        endMenu.querySelector("#result-message").textContent = updateResultMessage(totalRight, totalQuestions)
+        endMenu.querySelector("#total-right").textContent = totalRight
+        endMenu.querySelector("#questions-total").textContent = totalQuestions
+        endMenu.querySelector("#time-left").textContent = timeRemaining
+    }
 }
 var updateResultMessage = function(totalRightAnswers, totalPossibleQuestions) {
     var resultMessage = ""
@@ -245,12 +263,14 @@ var createQuestionButtons = function(options) {
         return false
     }
 }
-/////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Functions called when the page content is clicked
 var buttonClick = function(event) {
     if (event.target.tagName.toLowerCase() === "button") {
         switch (event.target.className) {
             case "start-quiz":
+                startTimer()
                 moveElements(event.target.closest(".start-menu"))
                 console.log("start quiz")
                 moveElements(document.querySelector("#question-" + nextQuestion))
@@ -260,14 +280,16 @@ var buttonClick = function(event) {
                 var promptEl = event.target.closest(".question")
                 var promptEl = promptEl.querySelector(".question-prompt")
                 checkAnswer(promptEl.textContent, event.target.id[event.target.id.length-1])
-                
                 moveElements(event.target.closest(".question"))
                 if (nextQuestion > totalQuestions) {
+                    stopTimer();
                     updateEndMenu();
                     moveElements(document.querySelector("#end-menu"))
                 } else {
                     moveElements(document.querySelector("#question-" + nextQuestion))
-                    nextQuestion++;
+                    if (timeRemaining > 0) {
+                        nextQuestion++;
+                    }
                 }
                 break;
         }
@@ -282,6 +304,7 @@ var checkAnswer = function(prompt, userAnswer) {
                 console.log("Correct");
                 totalRight++;
             } else {
+                penaltyTimer();
                 console.log("Incorrect");
             }
         }
@@ -297,17 +320,35 @@ var moveElements = function(element) {
         element.classList.add("completed")
     }
 }
+// When the timer runs out it should just skip to the end menu
+var skipToEnd = function() {
+    updateEndMenu();
+    moveElements(document.querySelector("#question-" + nextQuestion ))
+    moveElements(document.querySelector("#end-menu"))
+}
 
-//////////////////////////////////////////////
-// Update end menu dynamic values on the page
-var updateEndMenu = function() {
-    var endMenu = document.querySelector("#end-menu")
-    if (endMenu) {
-        endMenu.querySelector("#result-message").textContent = updateResultMessage(totalRight, totalQuestions)
-        endMenu.querySelector("#total-right").textContent = totalRight
-        endMenu.querySelector("#questions-total").textContent = totalQuestions
-        endMenu.querySelector("#time-left").textContent = "Change this"
+///////////////////////////////////////////////////////////////////////////////////////////
+// Timer functions
+var startTimer = function() {
+    quizTimer = setInterval(subtractTime, 1000, 1);
+}
+var penaltyTimer = function() {
+    subtractTime(timePenalty);
+}
+var subtractTime = function(amount) {
+    timeRemaining -= amount;
+    if (timeRemaining <= 0) {
+        timeRemaining = 0
+        stopTimer();
+        skipToEnd()
     }
+    updateTime()
+}
+var updateTime = function() {
+    timeRemainingEl.textContent = timeRemaining;
+}
+var stopTimer = function() {
+    clearInterval(quizTimer)
 }
 
 // Call of the functions
