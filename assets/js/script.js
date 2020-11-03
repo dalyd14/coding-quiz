@@ -50,7 +50,7 @@ var startMenuSetup = function() {
 var questionSetup = function(questionObj, questionNumber) {
     // this creates the div container for the question content
     var questionDiv = document.createElement("div");
-    questionDiv.className = "question waiting";
+    questionDiv.className = "question present";
     questionDiv.id = "question-" + questionNumber;
     // Give html for header and prompt
     questionDiv.innerHTML = 
@@ -72,6 +72,7 @@ var createQuestionButtons = function(options) {
             //create the button
             var optionButtonEl = document.createElement("button");
             optionButtonEl.className = "option-button";
+            optionButtonEl.id = "option-" + i;
             // Give the button the option text
             optionButtonEl.textContent = options[i];
             // Append it to the div wrapper
@@ -88,7 +89,30 @@ var createQuestionButtons = function(options) {
 // Functions called when the page content is clicked
 var buttonClick = function(event) {
     if (event.target.tagName.toLowerCase() === "button") {
-        console.log("You clicked a button")
+        switch (event.target.className) {
+            case "start-quiz":
+                console.log("start quiz")
+                break;
+            case "option-button":
+                var promptEl = event.target.closest(".question")
+                var promptEl = promptEl.querySelector(".question-prompt")
+                var isRight = checkAnswer(promptEl.textContent, event.target.id[event.target.id.length-1])
+                break;
+        }
+    }
+}
+var checkAnswer = function(prompt, userAnswer) {
+    for(var i = 0; i < questionBank.length; i++) {
+        if (questionBank[i].question === prompt) {
+            userAnswer = parseInt(userAnswer);
+            if (userAnswer === questionBank[i].answer) {
+                console.log("Correct");
+                return true
+            } else {
+                console.log("Incorrect");
+                return false
+            }
+        }
     }
 }
 
