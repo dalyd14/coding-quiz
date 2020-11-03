@@ -250,7 +250,7 @@ var endMenuSetup = function() {
     scoreFormInitialInput.id = "score-initial"
     // add button
     var scoreFormButton = document.createElement("button")
-    scoreFormButton.className = "initialButton"
+    scoreFormButton.className = "submit-score-button"
     scoreFormButton.textContent = "Save Score"
     // Append everything to form and then form to endDiv
     scoreForm.appendChild(scoreFormHeader);
@@ -290,26 +290,16 @@ var updateResultMessage = function(totalRightAnswers, totalPossibleQuestions) {
     return resultMessage
 }
 var setupScoresTable = function() {
-    var scoresArray = receiveScores()
 
     // div for display container
     var scoreDisplay = document.createElement("div")
-    scoreDisplay.className = "score-display"
+    scoreDisplay.className = "score-display waiting"
     scoreDisplay.id = "score-display"
 
     // Add a header
     var scoreDisplayHeading = document.createElement("h1")
     scoreDisplayHeading.textContent = "Here are the past scores..."
     scoreDisplay.appendChild(scoreDisplayHeading)
-
-    // append the scores    
-    if (scoresArray){
-        // Sort scores Array from greates score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-        scoresArray = scoresArray.sort(function (a, b) {
-            return a.value - b.value;
-        })
-        scoreDisplay.appendChild(updateScoresTable(scoresArray));
-    }
 
     return scoreDisplay
 }
@@ -318,7 +308,7 @@ var updateScoresTable = function(scoresArray) {
 
     for (var i = 0; i < scoresArray.length; i++ ) {
         var scoreDisplayItem = document.createElement("div")
-        scoreDisplayItem.className = "score-display-item"
+        scoreDisplayItem.className = "score-display-item present"
         var scoreDisplayItemInitials = document.createElement("p")
         var scoreDisplayItemScore = document.createElement("p")
         scoreDisplayItemInitials.className = "initials"
@@ -337,6 +327,7 @@ var updateScoresTable = function(scoresArray) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Functions called when the page content is clicked
 var buttonClick = function(event) {
+    event.preventDefault();
     if (event.target.tagName.toLowerCase() === "button") {
         switch (event.target.className) {
             case "start-quiz":
@@ -356,11 +347,33 @@ var buttonClick = function(event) {
                     updateEndMenu();
                     moveElements(document.querySelector("#end-menu"))
                 } else {
-                    moveElements(document.querySelector("#question-" + nextQuestion))
                     if (timeRemaining > 0) {
+                        moveElements(document.querySelector("#question-" + nextQuestion))
                         nextQuestion++;
                     }
                 }
+                break;
+            case "submit-score-button":
+                var scoreDisplayEl = document.querySelector("#score-display");
+                if (scoreDisplayEl && checkInput()) {
+                    var scoresArray = pastScores
+                    scoresArray.push({
+                        initials: document.querySelector("#score-initial").value,
+                        score: document.querySelector("#total-score").textContent
+                    })
+                    updateScores(scoresArray);
+                    var newScoresArray = receiveScores();
+                    if (newScoresArray){
+                        // Sort scores Array from greates score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+                        scoresArray = scoresArray.sort(function (a, b) {
+                            return a.value - b.value;
+                        })
+                        var scoreDisplayEl = document.querySelector("#score-display")
+                        scoreDisplayEl.appendChild(updateScoresTable(scoresArray));
+                        moveElements(document.querySelector("#end-menu"))
+                        moveElements(document.querySelector("#score-display"))
+                    }
+                }    
                 break;
         }
     }
@@ -380,6 +393,16 @@ var checkAnswer = function(prompt, userAnswer) {
         }
     }
 }
+// This checks to make sure the initial text field is filled out before proceeding
+var checkInput = function() {
+    var initialInputTextField = document.querySelector("#score-initial")
+    if (!initialInputTextField.value) {
+        alert("Please enter your initials.")
+        return false
+    } else {
+        return true
+    }
+}
 // Apply styles to elements to move them
 var moveElements = function(element) {
     if (element.classList.contains("waiting")){
@@ -393,7 +416,7 @@ var moveElements = function(element) {
 // When the timer runs out it should just skip to the end menu
 var skipToEnd = function() {
     updateEndMenu();
-    moveElements(document.querySelector("#question-" + nextQuestion ))
+    moveElements(document.querySelector(".present"))
     moveElements(document.querySelector("#end-menu"))
 }
 
@@ -428,9 +451,12 @@ var receiveScores = function() {
     return quizScores;
 }
 var updateScores = function(scoresArray) {
-    localStorage.setItem(JSON.stringify("quizScores", scoresArray))
+    localStorage.setItem("quizScores", JSON.stringify(scoresArray))
 }
 
+///////////////////////////////////////////////////////////////////////////////
 // Call of the functions
+// This will receive scores from localstorage on page load
+var pastScores = receiveScores();
 setupPage();
 mainContentEl.addEventListener("click",buttonClick);
