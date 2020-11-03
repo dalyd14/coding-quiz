@@ -100,6 +100,15 @@ header {
     justify-content: center;
 }
 
+/* Style score display */
+.score-display {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* Style for footer */
 footer {
     height: 10%;
@@ -109,7 +118,6 @@ footer {
 /* Style for waiting, present, complete */
 .waiting {
     right: 100%;
-
 }
 .present {
     right: 0;
