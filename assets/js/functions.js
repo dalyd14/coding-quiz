@@ -21,3 +21,24 @@ var questionForQuizSetup = function() {
         questionBank.splice(index, 1);
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////// The function for updating the result message in the end results menu
+/////////////////////////////////////////////////////////////////////////////////////////////////
+var updateResultMessage = function(totalRightAnswers, totalPossibleQuestions) {
+    var resultMessage = ""
+    if (totalRightAnswers === totalPossibleQuestions) {
+        resultMessage = "Wow! you answered every question correctly!"
+    } else if (totalRightAnswers >= (totalPossibleQuestions*.8)) {
+        resultMessage = "You did really well!"
+    } else if (totalRightAnswers >= (totalPossibleQuestions*.6)) {
+        resultMessage = "Not bad, not bad."
+    } else if (totalRightAnswers >= (totalPossibleQuestions*.4)) {
+        resultMessage = "There is room for improvement."
+    } else if (totalRightAnswers >= (totalPossibleQuestions*.1)) {
+        resultMessage = "Yikes!"
+    } else {
+        resultMessage = "The cat must have walked across the keyboard..."
+    }
+    return resultMessage
+}

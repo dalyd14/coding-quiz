@@ -70,14 +70,14 @@ var createQuestionButtons = function(options) {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ////// The DOM setup for the end menu
 /////////////////////////////////////////////////////////////////////////////////////////////////
-// Setting up the end menu element
-
 var endMenuSetup = function() {
+    // Setting up the end menu element
     // div wrapper for the whole end menu element
     var endDiv = document.createElement("div");
-    endDiv.className = "end-menu waiting";
-    endDiv.id = "end-menu";
-    endDiv.innerHTML = `
+    endDiv.className = "end-menu waiting"; // add the class name to the div wrapper
+    endDiv.id = "end-menu"; // add the id name to the div wrapper
+    // Add inner HTML for the div
+    endDiv.innerHTML = ` 
         <h1>You have completed the quiz!</h1>
         <h3 class="result-message" id="result-message"></h3>
         <p>
@@ -92,51 +92,55 @@ var endMenuSetup = function() {
             <button class="submit-score-button">Save Score</button>
         </form>
     `
-
     return endDiv;
 }
+var updateEndMenu = function() {
+    // this function updates the text contents of the DOM for the end menu
+    // this query finds the end menu div element
+    var endMenu = document.querySelector("#end-menu")
+    if (endMenu) {
+        // this calls the updateResultMessage to check the results of the quiz and output a message
+        endMenu.querySelector("#result-message").textContent = updateResultMessage(totalRight, totalQuestions);
+        // This updates the text content for how many the user got right out of the total asked
+        // and then finally it updates how much time was remaining when the quiz was completed
+        endMenu.querySelector("#total-right").textContent = totalRight;
+        endMenu.querySelector("#questions-total").textContent = totalQuestions;
+        endMenu.querySelector("#time-left").textContent = timeRemaining;
+        // this calculates the final score
+        endMenu.querySelector("#total-score").textContent = (totalRight*2 + timeRemaining);
+    }
+}
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////// The DOM setup for the end menu
+/////////////////////////////////////////////////////////////////////////////////////////////////
+var setupScoresTable = function() {
 
-/* var endMenuSetup = function() {
-    // div wrapper for the whole end menu element
-    var endDiv = document.createElement("div");
-    endDiv.className = "end-menu waiting";
-    endDiv.id = "end-menu";
-    // insert some static html
-    endDiv.innerHTML = "<h1>You have completed the quiz!</h1>"
-    // create a h3 tag that will dsiplay a dynamic message
-    var resMessageEl = document.createElement("h3")
-    resMessageEl.className = "result-message"
-    resMessageEl.id = "result-message"
-    endDiv.appendChild(resMessageEl)
-    // create two paragraph tags that will carry details on how you did in the quiz
-    var p1 = document.createElement("p")
-    var p2 = document.createElement("p")
-    p1.innerHTML = "You got <span id='total-right'></span> out of <span id='questions-total'></span> questions correct"
-    p2.innerHTML = "You had <span id='time-left'></span> seconds remaining!"
-    endDiv.appendChild(p1)
-    endDiv.appendChild(p2)
-    // Add form to save the score to local storage
-    var scoreForm = document.createElement("form");
-    // Add form header
-    var scoreFormHeader = document.createElement("h4")
-    scoreFormHeader.innerHTML = "Would you like to save the score of <span id='total-score'></span>?"
-    // add text input
-    var scoreFormInitialInput = document.createElement("input")
-    scoreFormInitialInput.setAttribute("type", "text")
-    scoreFormInitialInput.setAttribute("placeholder", "Input Initials Here")
-    scoreFormInitialInput.className = "score-initial"
-    scoreFormInitialInput.id = "score-initial"
-    // add button
-    var scoreFormButton = document.createElement("button")
-    scoreFormButton.className = "submit-score-button"
-    scoreFormButton.textContent = "Save Score"
-    // Append everything to form and then form to endDiv
-    scoreForm.appendChild(scoreFormHeader);
-    scoreForm.appendChild(scoreFormInitialInput);
-    scoreForm.appendChild(scoreFormButton);
-    endDiv.appendChild(scoreForm);
+    // div for scores display container
+    var scoreDisplay = document.createElement("div")
+    scoreDisplay.className = "score-display waiting"
+    scoreDisplay.id = "score-display"
 
-    // Return this end menu
-    return endDiv
-} */
+    // Add a header
+    scoreDisplay.innerHTML = "<h1>Here are the past scores...</h1>"
+
+    return scoreDisplay
+}
+var updateScoresTable = function(scoresArray) {
+    var scoreDisplayGrid = document.createElement("div")
+    scoreDisplayGrid.className = "score-display-grid"
+
+    for (var i = 0; i < scoresArray.length; i++ ) {
+        var scoreDisplayItem = document.createElement("div")
+        scoreDisplayItem.className = "score-display-item present"
+
+        scoreDisplayItem.innerHTML = `
+            <p class="position">` + (i + 1) + `</p>
+            <p class="initials">` + scoresArray[i].initials + `</p>
+            <p class="score">` + scoresArray[i].score + `</p>
+        `
+        scoreDisplayGrid.appendChild(scoreDisplayItem)
+    }
+
+    return scoreDisplayGrid
+}
