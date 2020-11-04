@@ -106,29 +106,6 @@ var skipToEnd = function() {
     moveElements(document.querySelector("#end-menu"))
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-// Timer functions
-var startTimer = function() {
-    quizTimer = setInterval(subtractTime, 1000, 1);
-}
-var penaltyTimer = function() {
-    subtractTime(timePenalty);
-}
-var subtractTime = function(amount) {
-    timeRemaining -= amount;
-    if (timeRemaining <= 0) {
-        timeRemaining = 0
-        stopTimer();
-        skipToEnd()
-    }
-    updateTime()
-}
-var updateTime = function() {
-    timeRemainingEl.textContent = timeRemaining;
-}
-var stopTimer = function() {
-    clearInterval(quizTimer)
-}
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Right or Wrong Display in Footer
 var displayRightOrWrong = function(isCorrect) {
