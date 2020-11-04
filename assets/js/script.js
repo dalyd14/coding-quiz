@@ -3,13 +3,11 @@
 var setupPage = function() {
     headerSetup();
     startMenuSetup();
-    allQuestionSetup();
+    questionForQuizSetup();
     mainContentEl.appendChild(endMenuSetup());
     mainContentEl.appendChild(setupScoresTable());
 }
-var headerSetup = function() {
-    timeRemainingEl.textContent = timeRemaining;
-}
+
 // setting up the starting menu
 var startMenuSetup = function() {
     var totalTimeEl = document.querySelector("span[id='time-total']")

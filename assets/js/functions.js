@@ -1,7 +1,10 @@
-// This function randomly picks the number of questions needed from the question bank
-// and moves them to the array of questions that will be used for this quiz 
-
-var allQuestionSetup = function() {
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////// The function for setting up the questions for the quiz
+/////////////////////////////////////////////////////////////////////////////////////////////////
+var questionForQuizSetup = function() {
+    // This function randomly picks the number of questions needed from the question bank
+    // and moves them to the array of questions that will be used for this quiz 
+    
     // totalQuestions is declared in variables.js
     // questionBank is declared in questions.js
 

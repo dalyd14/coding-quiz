@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // These are global static constants
-var totalTime = 60;
-var totalQuestions = 10;
-var timePenalty = 10;
+var totalTime = 60; // the total time available for the quiz; 
+var totalQuestions = 10; // the amount questions that will be asked;
+var timePenalty = 10; // the time penalty of answering the question incorrectly
 
 // This is a dynamic variable that stores the global next question 
 // so the code knows where in the quiz we are
