@@ -112,7 +112,7 @@ var updateEndMenu = function() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-////// The DOM setup for the end menu
+////// The DOM setup for the score displays
 /////////////////////////////////////////////////////////////////////////////////////////////////
 var setupScoresTable = function() {
 
@@ -143,4 +143,61 @@ var updateScoresTable = function(scoresArray) {
     }
 
     return scoreDisplayGrid
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////// The DOM manipulation for moving elements around the main content
+/////////////////////////////////////////////////////////////////////////////////////////////////
+var moveElements = function(element) {
+    // Apply styles to elements to move them
+    // if the element has a class of waiting (it is off screen to the left)
+    if (element.classList.contains("waiting")){
+        // remove the waiting class
+        element.classList.remove("waiting")
+        // add the present class so the element will now be seen
+        element.classList.add("present")
+    } else if (element.classList.contains("present") && !element.classList.contains("end-menu")) {
+        // remove the present class so it wont be seen
+        element.classList.remove("present")
+        // add the completed class so the element moves to the right off screen
+        element.classList.add("completed")
+    }
+}
+var skipToEnd = function() {
+    // When the timer runs out it should just skip to the end menu
+    // update the end menu to display results
+    updateEndMenu();
+    // then move the current question the quiz is on to the right off screen
+    moveElements(document.getElementsByClassName("question present")[0])
+    // and finally move the end menu into view
+    moveElements(document.querySelector("#end-menu"))
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////// The DOM manipulation for displaying whether the question was correct or incorrect
+/////////////////////////////////////////////////////////////////////////////////////////////////
+var displayRightOrWrong = function(isCorrect) {
+    // Right or Wrong Display in Footer
+    // Clear the text in the footer when the new question is answered
+    clearRightOrWrongDisplay(); 
+    // if there is a setTimeout counter present; clear it
+    if (rightOrWrongTimeout) {
+        // clear the timeout
+        clearTimeout(rightOrWrongTimeout)
+    }
+    if (isCorrect) {
+        // if the question was correct make the text "correct"
+        righOrWrongEl.textContent = "Correct"
+        // after 2 seconds call the clear display function
+        rightOrWrongTimeout = setTimeout(clearRightOrWrongDisplay,2000)
+    } else if (!isCorrect) {
+        // if the question wasnt correct make the text "incorrect"
+        righOrWrongEl.textContent = "Incorrect"
+        // after 2 seconds call the clear display function
+        rightOrWrongTimeout = setTimeout(clearRightOrWrongDisplay,2000)
+    }
+}
+var clearRightOrWrongDisplay = function() {
+    // this will clear display function
+    righOrWrongEl.textContent = ""
 }

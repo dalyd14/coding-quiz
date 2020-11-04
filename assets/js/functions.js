@@ -47,49 +47,69 @@ var updateResultMessage = function(totalRightAnswers, totalPossibleQuestions) {
 /////// Function for clicking on buttons in the main page content
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 var buttonClick = function(event) {
-    event.preventDefault();
-    if (event.target.tagName.toLowerCase() === "button") {
+    event.preventDefault(); // prevents the page to be reloaded
+    // only let click events on buttons through
+    if (event.target.tagName.toLowerCase() === "button") { 
         switch (event.target.className) {
             case "start-quiz":
-                startTimer()
+                startTimer() // if the start quiz button is pressed; start the timer
+                // move the start menu to the right off screen
                 moveElements(event.target.closest(".start-menu"))
-                console.log("start quiz")
+                // next question should be 1 at this point; so move question 1 into view
                 moveElements(document.querySelector("#question-" + nextQuestion))
+                // increment nextquestion to 2 so that will be the next question to see
                 nextQuestion++
                 break;
             case "option-button":
+                // if one of the answers to the questions is pressed
                 var promptEl = event.target.closest(".question")
                 var promptEl = promptEl.querySelector(".question-prompt")
+                // check to see if the answer is right
                 checkAnswer(promptEl.textContent, event.target.id[event.target.id.length-1])
+                // no matter what the result is we will move the question to the side
                 moveElements(event.target.closest(".question"))
+                // if the next question is greater than the total asked questions
                 if (nextQuestion > totalQuestions) {
+                    // stop timer because the quiz has been completed
                     stopTimer();
+                    // update the end menu with the stats of the quiz
                     updateEndMenu();
+                    // once the end menu is updated; move the end menu into view
                     moveElements(document.querySelector("#end-menu"))
                 } else {
+                    // if the quiz is not over yet check the time
                     if (timeRemaining > 0) {
+                        // if the time is still going move the next questions into view
                         moveElements(document.querySelector("#question-" + nextQuestion))
+                        // increment the next question so it will be the next one displayed
                         nextQuestion++;
                     }
                 }
                 break;
             case "submit-score-button":
+                // if the submit score button was pressed
+                // find the score display on the page
                 var scoreDisplayEl = document.querySelector("#score-display");
                 if (scoreDisplayEl && checkInput()) {
+                    // if the score display element was found and the user has entered their initials
+                    // make a new scoresArray that will hold the pastScores
                     var scoresArray = pastScores
+                    // push the just entered scores to the scoresArray
                     scoresArray.push({
                         initials: document.querySelector("#score-initial").value,
                         score: document.querySelector("#total-score").textContent
                     })
+                    // save the new scores to the localStorage
                     updateScores(scoresArray);
-                    var newScoresArray = receiveScores();
-                    if (newScoresArray){
-                        // Sort scores Array from greates score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-                        newScoresArray = newScoresArray.sort(function (a, b) {
+                    // if the scoresArray does have content in it
+                    if (scoresArray){
+                        // Sort scores Array from greatest score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+                        scoresArray = scoresArray.sort(function (a, b) {
                             return b.score - a.score;
                         })
-                        var scoreDisplayEl = document.querySelector("#score-display")
-                        scoreDisplayEl.appendChild(updateScoresTable(newScoresArray));
+                        // update the scores table with the ordered scoresArray
+                        scoreDisplayEl.appendChild(updateScoresTable(scoresArray));
+                        // move the end menu out of view; and then move the score display into view
                         moveElements(document.querySelector("#end-menu"))
                         moveElements(document.querySelector("#score-display"))
                     }
@@ -99,7 +119,48 @@ var buttonClick = function(event) {
     }
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////// Checking functions
+/////////////////////////////////////////////////////////////////////////////////////////////////
+var checkAnswer = function(prompt, userAnswer) {
+    // Check if answer that the user selected is correct
+    // loop through all the available questions
+    for(var i = 0; i < usedBank.length; i++) {
+        // check if the prompt matches the available question prompts
+        if (usedBank[i].question === prompt) {
+            // if the question is found; convert the button number that was pressed to a number
+            userAnswer = parseInt(userAnswer);
+            // get the answer from the bank and compare to the button number that was pressed
+            if (userAnswer === usedBank[i].answer) {
+                // if it matched then the answer is correct
+                // increase the total right variable by one
+                totalRight++;
+                // call display right or wrong function to display "Correct"
+                displayRightOrWrong(true);
+            } else {
+                // call penalyty timer to subtract the timer by a certain amount
+                penaltyTimer();
+                // call display right or wrong function to display "Correct"
+                displayRightOrWrong(false);
+            }
+        }
+    }
+}
+var checkInput = function() {
+    // This checks to make sure the initial text field is filled out before proceeding
+    // this finds the input text field
+    var initialInputTextField = document.querySelector("#score-initial")
+    // checks to see if the value is empty
+    if (!initialInputTextField.value) {
+        // send alert to user
+        alert("Please enter your initials.")
+        // return false to tell the code not to proceed until the user enters their initials
+        return false
+    } else {
+        // return true to tell the code it can send the score to localStorage
+        return true
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //////////// Timer functions
@@ -137,4 +198,15 @@ var updateTime = function() {
 var stopTimer = function() {
     // the stop timer will clear the interval
     clearInterval(quizTimer)
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//////// Local Storage Functions
+/////////////////////////////////////////////////////////////////////////////////////////////////
+var receiveScores = function() {
+    var quizScores = JSON.parse(localStorage.getItem("quizScores"));
+    return quizScores;
+}
+var updateScores = function(scoresArray) {
+    localStorage.setItem("quizScores", JSON.stringify(scoresArray))
 }

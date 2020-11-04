@@ -1,5 +1,6 @@
-///////////////////////////////////////////////////////////////////////////////
-// These are global static constants
+//////////////////////////////////////////////////////////////////////////////////////
+////// These are global static constants
+//////////////////////////////////////////////////////////////////////////////////////
 var totalTime = 60; // the total time available for the quiz; 
 var totalQuestions = 10; // the amount questions that will be asked;
 var timePenalty = 10; // the time penalty of answering the question incorrectly
@@ -17,6 +18,9 @@ var timeRemaining = totalTime;
 // These varaibles will hold the setInterval and setTimeout
 var quizTimer = null // this will hold the interval
 var rightOrWrongTimeout = null // this will hold the timeout for displaying
+
+// this variable will hold the pastscores that are found in the localStorage
+var pastScores = []
 
 // These are global references to the time-left header and footer right or 
 // wrong indicator (these references will remain unchanged throughout the use)
