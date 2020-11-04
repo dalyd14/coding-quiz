@@ -11,6 +11,7 @@ var totalRight = 0;
 // This is dynamic variable that store the global time remaining
 var timeRemaining = totalTime;
 var quizTimer = null // this will hold the interval
+var rightOrWrongTimeout = null // this will hold the timeout for displaying
 
 // These are global references to the time-left header and footer right or wrong indicator (these references will remain unchanged throughout the use)
 var timeRemainingEl = document.querySelector("#time-left");
@@ -19,131 +20,6 @@ var righOrWrongEl = document.querySelector("#right-or-wrong");
 // This is a reference to where all the content will live
 var mainContentEl = document.querySelector("#page-content");
 
-///////////////////////////////////////////
-// Create Question Bank
-var questionBank = [
-    {
-        question: "Here is question 1",
-        options: [
-            "option1a",
-            "option1b",
-            "option1c",
-            "option1d"
-        ],
-        answer: 2
-    },
-    {
-        question: "Here is question 2",
-        options: [
-            "option2a",
-            "option2b",
-            "option2c",
-            "option2d"
-        ],
-        answer: 1
-    },
-    {
-        question: "Here is question 3",
-        options: [
-            "option3a",
-            "option3b",
-            "option3c",
-            "option3d"
-        ],
-        answer: 2
-    },
-    {
-        question: "Here is question 4",
-        options: [
-            "option4a",
-            "option4b",
-            "option4c",
-            "option4d"
-        ],
-        answer: 1
-    },
-    {
-        question: "Here is question 5",
-        options: [
-            "option5a",
-            "option5b",
-            "option5c",
-            "option5d"
-        ],
-        answer: 2
-    },
-    {
-        question: "Here is question 6",
-        options: [
-            "option6a",
-            "option6b",
-            "option6c",
-            "option6d"
-        ],
-        answer: 1
-    },
-    {
-        question: "Here is question 7",
-        options: [
-            "option7a",
-            "option7b",
-            "option7c",
-            "option7d"
-        ],
-        answer: 2
-    },
-    {
-        question: "Here is question 8",
-        options: [
-            "option8a",
-            "option8b",
-            "option8c",
-            "option8d"
-        ],
-        answer: 1
-    },
-    {
-        question: "Here is question 9",
-        options: [
-            "option9a",
-            "option9b",
-            "option9c",
-            "option9d"
-        ],
-        answer: 2
-    },
-    {
-        question: "Here is question 10",
-        options: [
-            "option10a",
-            "option10b",
-            "option10c",
-            "option10d"
-        ],
-        answer: 1
-    },
-    {
-        question: "Here is question 11",
-        options: [
-            "option11a",
-            "option11b",
-            "option11c",
-            "option11d"
-        ],
-        answer: 2
-    },
-    {
-        question: "Here is question 12",
-        options: [
-            "option12a",
-            "option12b",
-            "option12c",
-            "option12d"
-        ],
-        answer: 1
-    }
-];
-var usedBank = [];
 //////////////////////////////////////////
 // Setup Functions
 var setupPage = function() {
@@ -305,6 +181,7 @@ var setupScoresTable = function() {
 }
 var updateScoresTable = function(scoresArray) {
     var scoreDisplayGrid = document.createElement("div")
+    scoreDisplayGrid.className = "score-display-grid"
 
     for (var i = 0; i < scoresArray.length; i++ ) {
         var scoreDisplayItem = document.createElement("div")
@@ -315,6 +192,10 @@ var updateScoresTable = function(scoresArray) {
         scoreDisplayItemScore.className = "score"
         scoreDisplayItemInitials.textContent = scoresArray[i].initials
         scoreDisplayItemScore.textContent = scoresArray[i].score
+        var scoreDisplayItemPosition = document.createElement("p")
+        scoreDisplayItemPosition.className = "position"
+        scoreDisplayItemPosition.textContent = i+1
+        scoreDisplayItem.appendChild(scoreDisplayItemPosition)
         scoreDisplayItem.appendChild(scoreDisplayItemInitials)
         scoreDisplayItem.appendChild(scoreDisplayItemScore)
 
@@ -364,7 +245,6 @@ var buttonClick = function(event) {
                     updateScores(scoresArray);
                     var newScoresArray = receiveScores();
                     if (newScoresArray){
-                        debugger;
                         // Sort scores Array from greates score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
                         newScoresArray = newScoresArray.sort(function (a, b) {
                             return b.score - a.score;
@@ -419,7 +299,7 @@ var moveElements = function(element) {
 // When the timer runs out it should just skip to the end menu
 var skipToEnd = function() {
     updateEndMenu();
-    moveElements(document.getElementsByClassName("question present"))
+    moveElements(document.getElementsByClassName("question present")[0])
     moveElements(document.querySelector("#end-menu"))
 }
 
@@ -449,13 +329,17 @@ var stopTimer = function() {
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Right or Wrong Display in Footer
 var displayRightOrWrong = function(isCorrect) {
+    clearRightOrWrongDisplay(); // Clear the text in the footer
+    if (rightOrWrongTimeout) {
+        clearTimeout(rightOrWrongTimeout)
+    }
     var footerDisplayEl = document.querySelector("#right-or-wrong")
     if (isCorrect && footerDisplayEl) {
         footerDisplayEl.textContent = "Correct"
-        setTimeout(clearRightOrWrongDisplay,2000)
+        rightOrWrongTimeout = setTimeout(clearRightOrWrongDisplay,2000)
     } else if (!isCorrect && footerDisplayEl) {
         footerDisplayEl.textContent = "Incorrect"
-        setTimeout(clearRightOrWrongDisplay,2000)
+        rightOrWrongTimeout = setTimeout(clearRightOrWrongDisplay,2000)
     }
 }
 var clearRightOrWrongDisplay = function() {

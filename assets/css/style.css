@@ -39,7 +39,7 @@ header {
     height: 80%;
     width: 100%;
 
-    transition: all 2s;
+    transition: right 500ms;
 }
 .start-menu h1, .start-menu p {
     text-align: center;
@@ -64,7 +64,7 @@ header {
 
     padding: 10px 50px;
 
-    transition: all 2s;
+    transition: right 500ms;
 }
 .option-button-wrapper {
     display: flex;
@@ -89,7 +89,7 @@ header {
     right: 100%;
     width: 100%;
 
-    transition: all 2s;
+    transition: right 500ms;
 }
 .end-menu h1 {
     text-align: center;
@@ -107,6 +107,22 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    right: 100%;
+    width: 100%;
+
+    transition: right 500ms;
+}
+.score-display-grid {
+    display: grid;
+    width: 60%;
+}
+.score-display-item {
+    display: grid;
+    grid-template-columns: repeat(3, 3fr);
+    grid-template-rows: 1fr;
+
+    text-align: center;
 }
 
 /* Style for footer */
