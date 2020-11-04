@@ -8,60 +8,6 @@ var setupPage = function() {
     mainContentEl.appendChild(setupScoresTable());
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Functions called when the page content is clicked
-var buttonClick = function(event) {
-    event.preventDefault();
-    if (event.target.tagName.toLowerCase() === "button") {
-        switch (event.target.className) {
-            case "start-quiz":
-                startTimer()
-                moveElements(event.target.closest(".start-menu"))
-                console.log("start quiz")
-                moveElements(document.querySelector("#question-" + nextQuestion))
-                nextQuestion++
-                break;
-            case "option-button":
-                var promptEl = event.target.closest(".question")
-                var promptEl = promptEl.querySelector(".question-prompt")
-                checkAnswer(promptEl.textContent, event.target.id[event.target.id.length-1])
-                moveElements(event.target.closest(".question"))
-                if (nextQuestion > totalQuestions) {
-                    stopTimer();
-                    updateEndMenu();
-                    moveElements(document.querySelector("#end-menu"))
-                } else {
-                    if (timeRemaining > 0) {
-                        moveElements(document.querySelector("#question-" + nextQuestion))
-                        nextQuestion++;
-                    }
-                }
-                break;
-            case "submit-score-button":
-                var scoreDisplayEl = document.querySelector("#score-display");
-                if (scoreDisplayEl && checkInput()) {
-                    var scoresArray = pastScores
-                    scoresArray.push({
-                        initials: document.querySelector("#score-initial").value,
-                        score: document.querySelector("#total-score").textContent
-                    })
-                    updateScores(scoresArray);
-                    var newScoresArray = receiveScores();
-                    if (newScoresArray){
-                        // Sort scores Array from greates score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-                        newScoresArray = newScoresArray.sort(function (a, b) {
-                            return b.score - a.score;
-                        })
-                        var scoreDisplayEl = document.querySelector("#score-display")
-                        scoreDisplayEl.appendChild(updateScoresTable(newScoresArray));
-                        moveElements(document.querySelector("#end-menu"))
-                        moveElements(document.querySelector("#score-display"))
-                    }
-                }    
-                break;
-        }
-    }
-}
 // Check if answer that the user selected is correct
 var checkAnswer = function(prompt, userAnswer) {
     for(var i = 0; i < usedBank.length; i++) {
