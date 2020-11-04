@@ -27,5 +27,7 @@ var highScores = []
 var timeRemainingEl = document.querySelector("#time-left");
 var righOrWrongEl = document.querySelector("#right-or-wrong");
 
+var viewHighscoresButton = document.querySelector("#view-highscores");
+
 // This is a reference to where all the content will live
 var mainContentEl = document.querySelector("#page-content");

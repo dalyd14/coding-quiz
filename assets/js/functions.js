@@ -52,7 +52,10 @@ var buttonClick = function(event) {
     if (event.target.tagName.toLowerCase() === "button") { 
         switch (event.target.className) {
             case "start-quiz":
-                startTimer() // if the start quiz button is pressed; start the timer
+                // if the start quiz button is pressed; start the timer
+                startTimer() 
+                // give the view high scores button a display of none
+                viewHighscoresButton.classList.toggle("display-none")
                 // move the start menu to the right off screen
                 moveElements(event.target.closest(".start-menu"))
                 // next question should be 1 at this point; so move question 1 into view
@@ -72,6 +75,8 @@ var buttonClick = function(event) {
                 if (nextQuestion > totalQuestions) {
                     // stop timer because the quiz has been completed
                     stopTimer();
+                    // make the view high scores button visibility
+                    viewHighscoresButton.classList.toggle("display-none")
                     // update the end menu with the stats of the quiz
                     updateEndMenu();
                     // once the end menu is updated; move the end menu into view
@@ -90,6 +95,10 @@ var buttonClick = function(event) {
                 // if the submit score button was pressed
                 // find the score display on the page
                 var scoreDisplayEl = document.querySelector("#score-display");
+
+                // make the view high scores button visibility
+                viewHighscoresButton.classList.toggle("display-none")
+
                 if (scoreDisplayEl && checkInput()) {
                     // if the score display element was found and the user has entered their initials                  
                     // push the just entered scores to the scoresArray
@@ -108,7 +117,7 @@ var buttonClick = function(event) {
                         // update the scores table with the ordered scoresArray
                         scoreDisplayEl.appendChild(updateScoresTable(highScores));
                         // move the end menu out of view; and then move the score display into view
-                        moveElements(document.querySelector("#end-menu"))
+                        moveElements(document.querySelector("#end-menu"), true)
                         moveElements(document.querySelector("#score-display"))
                     }
                 }    
@@ -118,7 +127,7 @@ var buttonClick = function(event) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/////// Function for clicking on the high scores button
+/////// Function for clicking on the header buttons
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 var highScoreClick = function() {
     // find the scores display element
@@ -202,6 +211,8 @@ var subtractTime = function(amount) {
         timeRemaining = 0
         // call the stop timer function
         stopTimer();
+        // make the view high scores button visibility
+        viewHighscoresButton.classList.toggle("display-none")
         // since the timer ran out, the quiz is over and we will skip to end
         skipToEnd()
     }

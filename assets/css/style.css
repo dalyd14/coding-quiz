@@ -17,6 +17,9 @@ body {
     align-items: center;
     justify-content: space-between;
 }
+.display-none {
+    display: none;
+}
 /* Style for Header */
 header {
     display: flex;

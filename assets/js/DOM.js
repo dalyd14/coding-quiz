@@ -146,7 +146,7 @@ var updateScoresTable = function(scoresArray) {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ////// The DOM manipulation for moving elements around the main content
 /////////////////////////////////////////////////////////////////////////////////////////////////
-var moveElements = function(element) {
+var moveElements = function(element, isSubmit) {
     // Apply styles to elements to move them
     // if the element has a class of waiting (it is off screen to the left)
     if (element.classList.contains("waiting")){
@@ -155,6 +155,11 @@ var moveElements = function(element) {
         // add the present class so the element will now be seen
         element.classList.add("present")
     } else if (element.classList.contains("present") && !element.classList.contains("end-menu")) {
+        // remove the present class so it wont be seen
+        element.classList.remove("present")
+        // add the completed class so the element moves to the right off screen
+        element.classList.add("completed")
+    } else if (element.classList.contains("present") && isSubmit) { 
         // remove the present class so it wont be seen
         element.classList.remove("present")
         // add the completed class so the element moves to the right off screen
