@@ -70,3 +70,73 @@ var createQuestionButtons = function(options) {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ////// The DOM setup for the end menu
 /////////////////////////////////////////////////////////////////////////////////////////////////
+// Setting up the end menu element
+
+var endMenuSetup = function() {
+    // div wrapper for the whole end menu element
+    var endDiv = document.createElement("div");
+    endDiv.className = "end-menu waiting";
+    endDiv.id = "end-menu";
+    endDiv.innerHTML = `
+        <h1>You have completed the quiz!</h1>
+        <h3 class="result-message" id="result-message"></h3>
+        <p>
+            You got <span id='total-right'></span> out of <span id='questions-total'></span> questions correct
+        </p>
+        <p>
+            You had <span id='time-left'></span> seconds remaining!
+        </p>
+        <form>
+            <h4>Would you like to save the score of <span id='total-score'></span>?</h4>
+            <input type="text" placeholder="Input Initials Here" class="score-initial" id="score-initial">
+            <button class="submit-score-button">Save Score</button>
+        </form>
+    `
+
+    return endDiv;
+}
+
+
+/* var endMenuSetup = function() {
+    // div wrapper for the whole end menu element
+    var endDiv = document.createElement("div");
+    endDiv.className = "end-menu waiting";
+    endDiv.id = "end-menu";
+    // insert some static html
+    endDiv.innerHTML = "<h1>You have completed the quiz!</h1>"
+    // create a h3 tag that will dsiplay a dynamic message
+    var resMessageEl = document.createElement("h3")
+    resMessageEl.className = "result-message"
+    resMessageEl.id = "result-message"
+    endDiv.appendChild(resMessageEl)
+    // create two paragraph tags that will carry details on how you did in the quiz
+    var p1 = document.createElement("p")
+    var p2 = document.createElement("p")
+    p1.innerHTML = "You got <span id='total-right'></span> out of <span id='questions-total'></span> questions correct"
+    p2.innerHTML = "You had <span id='time-left'></span> seconds remaining!"
+    endDiv.appendChild(p1)
+    endDiv.appendChild(p2)
+    // Add form to save the score to local storage
+    var scoreForm = document.createElement("form");
+    // Add form header
+    var scoreFormHeader = document.createElement("h4")
+    scoreFormHeader.innerHTML = "Would you like to save the score of <span id='total-score'></span>?"
+    // add text input
+    var scoreFormInitialInput = document.createElement("input")
+    scoreFormInitialInput.setAttribute("type", "text")
+    scoreFormInitialInput.setAttribute("placeholder", "Input Initials Here")
+    scoreFormInitialInput.className = "score-initial"
+    scoreFormInitialInput.id = "score-initial"
+    // add button
+    var scoreFormButton = document.createElement("button")
+    scoreFormButton.className = "submit-score-button"
+    scoreFormButton.textContent = "Save Score"
+    // Append everything to form and then form to endDiv
+    scoreForm.appendChild(scoreFormHeader);
+    scoreForm.appendChild(scoreFormInitialInput);
+    scoreForm.appendChild(scoreFormButton);
+    endDiv.appendChild(scoreForm);
+
+    // Return this end menu
+    return endDiv
+} */
