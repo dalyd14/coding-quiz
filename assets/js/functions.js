@@ -91,24 +91,22 @@ var buttonClick = function(event) {
                 // find the score display on the page
                 var scoreDisplayEl = document.querySelector("#score-display");
                 if (scoreDisplayEl && checkInput()) {
-                    // if the score display element was found and the user has entered their initials
-                    // make a new scoresArray that will hold the pastScores
-                    var scoresArray = pastScores
+                    // if the score display element was found and the user has entered their initials                  
                     // push the just entered scores to the scoresArray
-                    scoresArray.push({
+                    highScores.push({
                         initials: document.querySelector("#score-initial").value,
                         score: document.querySelector("#total-score").textContent
                     })
                     // save the new scores to the localStorage
-                    updateScores(scoresArray);
+                    updateScores(highScores);
                     // if the scoresArray does have content in it
-                    if (scoresArray){
+                    if (highScores){
                         // Sort scores Array from greatest score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-                        scoresArray = scoresArray.sort(function (a, b) {
+                        highScores = highScores.sort(function (a, b) {
                             return b.score - a.score;
                         })
                         // update the scores table with the ordered scoresArray
-                        scoreDisplayEl.appendChild(updateScoresTable(scoresArray));
+                        scoreDisplayEl.appendChild(updateScoresTable(highScores));
                         // move the end menu out of view; and then move the score display into view
                         moveElements(document.querySelector("#end-menu"))
                         moveElements(document.querySelector("#score-display"))
@@ -117,6 +115,25 @@ var buttonClick = function(event) {
                 break;
         }
     }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////// Function for clicking on the high scores button
+////////////////////////////////////////////////////////////////////////////////////////////////////
+var highScoreClick = function() {
+    // find the scores display element
+    var scoreDisplayEl = document.querySelector("#score-display");
+    if (scoreDisplayEl) {
+        // Sort scores Array from greatest score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+        highScores = highScores.sort(function (a, b) {
+            return b.score - a.score;
+        })
+        // update the scores table with the ordered scoresArray
+        scoreDisplayEl.appendChild(updateScoresTable(highScores))
+        // move to scores display element
+        skipToScores();
+    }
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

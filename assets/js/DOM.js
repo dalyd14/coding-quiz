@@ -115,12 +115,10 @@ var updateEndMenu = function() {
 ////// The DOM setup for the score displays
 /////////////////////////////////////////////////////////////////////////////////////////////////
 var setupScoresTable = function() {
-
     // div for scores display container
     var scoreDisplay = document.createElement("div")
     scoreDisplay.className = "score-display waiting"
     scoreDisplay.id = "score-display"
-
     // Add a header
     scoreDisplay.innerHTML = "<h1>Here are the past scores...</h1>"
 
@@ -171,6 +169,10 @@ var skipToEnd = function() {
     moveElements(document.getElementsByClassName("question present")[0])
     // and finally move the end menu into view
     moveElements(document.querySelector("#end-menu"))
+}
+var skipToScores = function() {
+    moveElements(document.querySelector(".present"))
+    moveElements(document.querySelector("#score-display"))
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

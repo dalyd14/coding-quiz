@@ -20,7 +20,7 @@ var quizTimer = null // this will hold the interval
 var rightOrWrongTimeout = null // this will hold the timeout for displaying
 
 // this variable will hold the pastscores that are found in the localStorage
-var pastScores = []
+var highScores = []
 
 // These are global references to the time-left header and footer right or 
 // wrong indicator (these references will remain unchanged throughout the use)

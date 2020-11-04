@@ -13,6 +13,6 @@ var setupPage = function() {
 /////// Call of the functions
 ///////////////////////////////////////////////////////////////////////////////
 // This will receive scores from localstorage on page load
-pastScores = receiveScores();
+highScores = receiveScores();
 setupPage();
 mainContentEl.addEventListener("click",buttonClick);
