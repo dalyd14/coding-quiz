@@ -133,6 +133,7 @@ var highScoreClick = function() {
     // find the scores display element
     var scoreDisplayEl = document.querySelector("#score-display");
     if (scoreDisplayEl) {
+        viewHighscoresButton.classList.toggle("display-none")
         // Sort scores Array from greatest score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
         highScores = highScores.sort(function (a, b) {
             return b.score - a.score;

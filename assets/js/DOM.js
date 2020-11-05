@@ -176,7 +176,7 @@ var skipToEnd = function() {
     moveElements(document.querySelector("#end-menu"))
 }
 var skipToScores = function() {
-    moveElements(document.querySelector(".present"))
+    moveElements(document.getElementsByClassName("present")[0], true)
     moveElements(document.querySelector("#score-display"))
 }
 
@@ -194,17 +194,20 @@ var displayRightOrWrong = function(isCorrect) {
     }
     if (isCorrect) {
         // if the question was correct make the text "correct"
-        righOrWrongEl.textContent = "Correct"
+        rightOrWrongEl.textContent = "Correct"
+        rightOrWrongElDiv.classList.add("right-or-wrong")
         // after 2 seconds call the clear display function
         rightOrWrongTimeout = setTimeout(clearRightOrWrongDisplay,2000)
     } else if (!isCorrect) {
         // if the question wasnt correct make the text "incorrect"
-        righOrWrongEl.textContent = "Incorrect"
+        rightOrWrongEl.textContent = "Incorrect"
+        rightOrWrongElDiv.classList.add("right-or-wrong")
         // after 2 seconds call the clear display function
         rightOrWrongTimeout = setTimeout(clearRightOrWrongDisplay,2000)
     }
 }
 var clearRightOrWrongDisplay = function() {
     // this will clear display function
-    righOrWrongEl.textContent = ""
+    rightOrWrongEl.textContent = ""
+    rightOrWrongElDiv.classList.remove("right-or-wrong")
 }

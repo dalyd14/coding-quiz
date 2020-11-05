@@ -6,6 +6,14 @@
 a {
     text-decoration: none;
     color: unset;
+
+    padding: 5px;
+
+    background: aliceblue;
+    border: 1px solid black;
+}
+a:active {
+    background: lightblue;
 }
 html, body {
     height: 100%;
@@ -20,11 +28,51 @@ body {
 .display-none {
     display: none;
 }
+/* General Styles */
+h1 {
+    text-align: center;
+    padding: 15px 0;
+}
+h3 {
+    text-align: center;
+    padding: 5px 0;
+}
+h4 {
+    text-align: center;
+    padding: 5px 0;
+}
+p {
+    text-align: center;
+    padding: 5px 0;
+}
+input {
+    appearance: none;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid black;;
+}
+button {
+    margin: 15px 0;
+    padding: 5px;
+    width: 100%;
+    appearance: none;
+
+    background: aliceblue;
+    border: 1px solid black;
+}
+button:active {
+    background: lightblue;
+}
+form {
+    margin-top: 25px;
+}
 /* Style for Header */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    padding: 0 50px;
 
     height: 10%;
     width: 100%;
@@ -38,9 +86,10 @@ header {
 
     position: absolute;
 
+    padding: 0 50px;
+
     top: 0;
     right: 100%;
-    height: 80%;
     width: 100%;
 
     transition: right 500ms;
@@ -53,8 +102,11 @@ header {
 .page-content {
     position: relative;
 
-    height: 80%;
+    height: 60%;
     width: 100%;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 .question {
     display: flex;
@@ -76,8 +128,9 @@ header {
     width: 100%;
 }
 .option-button {
-    margin: 10px 25px 0 25px;
+    margin: 15px 0 0 0;
     padding: 5px;
+    width: 100%;
 }
 
 /* Style for End Menu */
@@ -88,6 +141,8 @@ header {
     justify-content: center;
 
     position: absolute;
+
+    padding: 0 50px;
 
     top: 0;
     right: 100%;
@@ -115,24 +170,36 @@ header {
     right: 100%;
     width: 100%;
 
+    padding: 0 50px;
+
     transition: right 500ms;
 }
 .score-display-grid {
     display: grid;
-    width: 60%;
+    width: 50%;
 }
-.score-display-item {
+.score-display-item  {
     display: grid;
     grid-template-columns: repeat(3, 3fr);
     grid-template-rows: 1fr;
 
-    text-align: center;
+    text-align: left;
+}
+.score-display-item:nth-of-type(2n-1) {
+    background: aliceblue;
 }
 
 /* Style for footer */
 footer {
-    height: 10%;
+    height: 40%;
     width: 100%;
+}
+.right-or-wrong {
+    margin: 0 75px;
+    padding: 0 20px;
+
+    color: lightgray;
+    border-top: 1px solid lightgray;
 }
 
 /* Style for waiting, present, complete */
