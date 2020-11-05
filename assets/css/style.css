@@ -125,6 +125,8 @@ header {
 .option-button-wrapper {
     display: flex;
     flex-direction: column;
+    align-items: center;
+
     width: 100%;
 }
 .option-button {
@@ -157,6 +159,9 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+
+    width: 100%;
 }
 
 /* Style score display */
@@ -214,3 +219,33 @@ footer {
 
 }
 
+@media screen and (min-width: 500px) {
+    button,
+    .option-button {
+        width: 50%;
+    }
+    .start-menu,
+    .question,
+    .end-menu,
+    .score-display {
+        padding: 0 100px;
+    }
+    .end-menu form {
+        width: 80%;
+    }
+}
+@media screen and (min-width: 900px) {
+    button,
+    .option-button {
+        width: 30%;
+    }
+    .start-menu,
+    .question,
+    .end-menu,
+    .score-display {
+        padding: 0 20%;
+    }
+    .end-menu form {
+        width: 50%;
+    }
+}
