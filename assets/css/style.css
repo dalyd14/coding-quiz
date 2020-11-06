@@ -209,13 +209,13 @@ footer {
 
 /* Style for waiting, present, complete */
 .waiting {
-    right: 100%;
+    right: -100%;
 }
 .present {
     right: 0;
 }
 .completed {
-    right: -100%;
+    right: 100%;
 
 }
 

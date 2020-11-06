@@ -162,11 +162,13 @@ var checkAnswer = function(prompt, userAnswer) {
                 // if it matched then the answer is correct
                 // increase the total right variable by one
                 totalRight++;
+                console.log("correct", totalRight)
                 // call display right or wrong function to display "Correct"
                 displayRightOrWrong(true);
             } else {
                 // call penalyty timer to subtract the timer by a certain amount
                 penaltyTimer();
+                console.log("incorrect", totalRight)
                 // call display right or wrong function to display "Correct"
                 displayRightOrWrong(false);
             }
@@ -234,6 +236,9 @@ var stopTimer = function() {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 var receiveScores = function() {
     var quizScores = JSON.parse(localStorage.getItem("quizScores"));
+    if (!quizScores) {
+        quizScores = [];
+    }
     return quizScores;
 }
 var updateScores = function(scoresArray) {

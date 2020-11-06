@@ -4,122 +4,124 @@
 var usedBank = [];
 var questionBank = [
     {
-        question: "Here is question 1",
+        question: "Which one is the correct way to declare the function fName?",
         options: [
-            "option1a",
-            "option1b",
-            "option1c",
-            "option1d"
+            "function {fName}",
+            "var function (fName) {}",
+            "var fName = function() {}",
+            "var fName = function{}"
         ],
         answer: 2
     },
     {
-        question: "Here is question 2",
+        question: "What indicates a comment in HTML?",
         options: [
-            "option2a",
-            "option2b",
-            "option2c",
-            "option2d"
+            "//",
+            "/*",
+            "##",
+            "<!--"
+        ],
+        answer: 3
+    },
+    {
+        question: "What indicates a style assigned to an id of thisID?",
+        options: [
+            "#thisID",
+            ".thisID",
+            "thisID",
+            ":thisID"
+        ],
+        answer: 0
+    },
+    {
+        question: "What does n equal after this code runs? n=6; n++",
+        options: [
+            "5",
+            "6",
+            "7",
+            "8"
+        ],
+        answer: 2
+    },
+    {
+        question: "Which of the following is not a Javascript code operation?",
+        options: [
+            "for() {}",
+            "if() {}",
+            "while() {}",
+            "timer() {}"
+        ],
+        answer: 3
+    },
+    {
+        question: "What does the setTimeout() function do",
+        options: [
+            "setTimeout pauses the code for a set time",
+            "setTimeout calls a function once after a set time",
+            "setTimeout calls a function once and then pauses for a set time",
+            "setTimeout ends your program at midnight"
         ],
         answer: 1
     },
     {
-        question: "Here is question 3",
+        question: "What does the setInterval() function do",
         options: [
-            "option3a",
-            "option3b",
-            "option3c",
-            "option3d"
+            "setInterval will repeatedly call a function after every certain amount of time passes",
+            "setInterval will set your alarm clock",
+            "setInterval calls a function once after a certain amount of time",
+            "setInterval ends your program at noon"            
+        ],
+        answer: 0
+    },
+    {
+        question: "What is i?  if(2 > 3) {i = 1} else {i = 2}",
+        options: [
+            "null",
+            "1",
+            "2",
+            "3",
+            "4"
         ],
         answer: 2
     },
     {
-        question: "Here is question 4",
+        question: "what does ! mean in conditional statements?",
         options: [
-            "option4a",
-            "option4b",
-            "option4c",
-            "option4d"
-        ],
-        answer: 1
-    },
-    {
-        question: "Here is question 5",
-        options: [
-            "option5a",
-            "option5b",
-            "option5c",
-            "option5d"
+            "or",
+            "yay",
+            "not",
+            "and",
+            "but"
         ],
         answer: 2
     },
     {
-        question: "Here is question 6",
+        question: "what symbol is OR in a conditional statement?",
         options: [
-            "option6a",
-            "option6b",
-            "option6c",
-            "option6d"
+            "||",
+            "<>",
+            "or",
+            "&"
         ],
-        answer: 1
+        answer: 0
     },
     {
-        question: "Here is question 7",
+        question: "How many tortillas are in a Full Stack Developer?",
         options: [
-            "option7a",
-            "option7b",
-            "option7c",
-            "option7d"
+            "1",
+            "2",
+            "3",
+            "null"
         ],
-        answer: 2
+        answer: 3
     },
     {
-        question: "Here is question 8",
+        question: "How do you make the background red in CSS?",
         options: [
-            "option8a",
-            "option8b",
-            "option8c",
-            "option8d"
-        ],
-        answer: 1
-    },
-    {
-        question: "Here is question 9",
-        options: [
-            "option9a",
-            "option9b",
-            "option9c",
-            "option9d"
-        ],
-        answer: 2
-    },
-    {
-        question: "Here is question 10",
-        options: [
-            "option10a",
-            "option10b",
-            "option10c",
-            "option10d"
-        ],
-        answer: 1
-    },
-    {
-        question: "Here is question 11",
-        options: [
-            "option11a",
-            "option11b",
-            "option11c",
-            "option11d"
-        ],
-        answer: 2
-    },
-    {
-        question: "Here is question 12",
-        options: [
-            "option12a",
-            "option12b",
-            "option12c",
-            "option12d"
+            "color: red",
+            "background: red",
+            "border-color: red",
+            "behind-color: red"
         ],
         answer: 1
     }
