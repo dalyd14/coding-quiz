@@ -97,6 +97,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    padding: 0 10%;
 }
 header div {
     font-size: 25px;
@@ -153,22 +155,131 @@ header div {
 .score-display-grid {
     display: flex;
     flex-direction: column;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 .score-display-item {
     display: grid;
     grid-template-columns: 1fr 2fr 2fr;
 }
-.score-display-item:nth-of-type(2n) {
+.score-display-item:nth-of-type(2n-1) {
     background-color: lavender;
+}
+
+/* footer styles */
+footer {
+    height: 25%;
+}
+footer div {
+    margin: 0 30%;
+    padding: 0 15px;
+    text-align: left;
+
+    border-top: 1px solid gray;
+    color: gray;
 }
 
 /* Style for waiting, present, complete */
 .waiting {
     right: -100%;
+    visibility: hidden;
 }
 .present {
     right: 0;
 }
 .completed {
     right: 100%;
+    visibility: hidden;
+}
+
+@media screen and (max-width: 1100px) {
+    .start-menu,
+    .question,
+    .end-menu,
+    .score-display { 
+        padding: 0 15%;
+    }
+    .option-button, .start-quiz {
+        font-size: 20px;
+    }
+    h1 {
+        font-size: 25px;
+    }
+    h3 {
+        font-size: 30px;
+    }
+    h4 {
+        font-size: 20px;
+    }
+    p {
+        font-size: 17px;
+    }
+    .end-menu input {
+        font-size: 20px;
+    }
+    .end-menu button {
+        font-size: 20px;
+    }
+    .score-display button {
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 700px) {
+    .start-menu,
+    .question,
+    .end-menu,
+    .score-display { 
+        padding: 0 10%;
+    }
+    header {  
+        padding: 0 2%;
+    }
+    .option-button, .start-quiz {
+        font-size: 18px;
+        padding: 20px;
+    }
+    h1 {
+        font-size: 20px;
+    }
+    h3 {
+        font-size: 30px;
+    }
+    h4 {
+        font-size: 15px;
+        padding: 10px 0;
+    }
+    p {
+        font-size: 12px;
+    }
+    .end-menu input {
+        padding: 7px;
+        font-size: 15px;
+    }
+    .end-menu button {
+        font-size: 15px;
+        padding: 10px;
+    }
+    .score-display button {
+        font-size: 15px;
+        padding: 7px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .start-menu,
+    .question,
+    .end-menu,
+    .score-display { 
+        padding: 0 5%;
+    }
+    header div {
+        font-size: 15px;
+    }
+    header a {
+        font-size: 12px;
+    }
+    .option-button, .start-quiz {
+        font-size: 12px;
+        padding: 10px;
+    }
 }

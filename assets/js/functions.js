@@ -153,6 +153,7 @@ var highScoreClick = function() {
     // find the scores display element
     var scoreDisplayEl = document.querySelector("#score-display");
     if (scoreDisplayEl) {
+        // Toggle the header buttons
         viewHighscoresButton.classList.toggle("display-none")
         goBackButton.classList.toggle("display-none")
         // Sort scores Array from greatest score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
@@ -166,7 +167,7 @@ var highScoreClick = function() {
             // Make the timeRemaining 0 so their total score is 0 when the results are shown
             timeRemaining = 0
         }
-        // Update the endMenu witht the quiz scores
+        // Update the endMenu with the quiz scores
         updateEndMenu();
         // move to scores display element
         skipToScores();

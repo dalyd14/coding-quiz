@@ -32,7 +32,7 @@ var questionSetup = function(questionObj, questionNumber) {
     
     // Give html for question header and the question prompt
     questionDiv.innerHTML = 
-        `<h1 class='question-number'>Question` + questionNumber + `</h1>
+        `<h1 class='question-number'>Question ` + questionNumber + `</h1>
         <p class='question-prompt'>` + questionObj.question + `</p>`;
     
     // Create all of the option buttons; this calls another function to make the buttons
@@ -129,8 +129,17 @@ var setupScoresTable = function() {
     return scoreDisplay
 }
 var updateScoresTable = function(scoresArray) {
+    // First see if there is already a score display grid loaded
+    var alreadyLoadedGrid = document.querySelector(".score-display-grid")
+    if (alreadyLoadedGrid) {
+        // if there is, delete it before you add another
+        alreadyLoadedGrid.remove()
+    }
+
+    // make a new display grid
     var scoreDisplayGrid = document.createElement("div")
     scoreDisplayGrid.className = "score-display-grid"
+
 
     for (var i = 0; i < scoresArray.length; i++ ) {
         var scoreDisplayItem = document.createElement("div")
@@ -178,6 +187,7 @@ var skipToEnd = function() {
     moveElements(document.getElementsByClassName("question present")[0])
     // and finally move the end menu into view
     moveElements(document.querySelector("#end-menu"))
+
 }
 var skipToScores = function() {
     moveElements(document.getElementsByClassName("present")[0], true)
@@ -210,13 +220,13 @@ var displayRightOrWrong = function(isCorrect) {
     if (isCorrect) {
         // if the question was correct make the text "correct"
         rightOrWrongEl.textContent = "Correct"
-        rightOrWrongElDiv.classList.add("right-or-wrong")
+        footerEl.classList.remove("display-none")
         // after 2 seconds call the clear display function
         rightOrWrongTimeout = setTimeout(clearRightOrWrongDisplay,2000)
     } else if (!isCorrect) {
         // if the question wasnt correct make the text "incorrect"
         rightOrWrongEl.textContent = "Incorrect"
-        rightOrWrongElDiv.classList.add("right-or-wrong")
+        footerEl.classList.remove("display-none")
         // after 2 seconds call the clear display function
         rightOrWrongTimeout = setTimeout(clearRightOrWrongDisplay,2000)
     }
@@ -224,5 +234,7 @@ var displayRightOrWrong = function(isCorrect) {
 var clearRightOrWrongDisplay = function() {
     // this will clear display function
     rightOrWrongEl.textContent = ""
-    rightOrWrongElDiv.classList.remove("right-or-wrong")
+    if (!footerEl.classList.contains("display-none")) {
+        footerEl.classList.add("display-none")
+    }
 }

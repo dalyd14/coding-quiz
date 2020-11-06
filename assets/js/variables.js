@@ -25,7 +25,8 @@ var highScores = []
 // These are global references to the time-left header and footer right or 
 // wrong indicator (these references will remain unchanged throughout the use)
 var timeRemainingEl = document.querySelector("#time-left");
-var rightOrWrongElDiv = document.querySelector("#right-or-wrong-div");
+
+var footerEl = document.querySelector("footer")
 var rightOrWrongEl = document.querySelector("#right-or-wrong");
 
 var viewHighscoresButton = document.querySelector("#view-highscores");
