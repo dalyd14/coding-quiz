@@ -91,6 +91,7 @@ var endMenuSetup = function() {
             <input type="text" placeholder="Input Initials Here" class="score-initial" id="score-initial">
             <button class="submit-score-button">Save Score</button>
         </form>
+        <button class="restart-quiz" id="restart-quiz">Restart Quiz</button>
     `
     return endDiv;
 }
@@ -120,7 +121,10 @@ var setupScoresTable = function() {
     scoreDisplay.className = "score-display waiting"
     scoreDisplay.id = "score-display"
     // Add a header
-    scoreDisplay.innerHTML = "<h1>Here are the past scores...</h1>"
+    scoreDisplay.innerHTML = `
+        <h1>Here are the past scores...</h1>
+        <button class="clear-highscores" id="clear-highscores">Clear High Scores</button>
+    `
 
     return scoreDisplay
 }
@@ -178,6 +182,17 @@ var skipToEnd = function() {
 var skipToScores = function() {
     moveElements(document.getElementsByClassName("present")[0], true)
     moveElements(document.querySelector("#score-display"))
+}
+var goBacktoEndMenu = function() {
+    // Find the elements of the end menu and score display
+    var endMenuEl = document.querySelector("#end-menu")
+    var scoreDisplayEl = document.querySelector("#score-display")
+    // Manipulate the classes of these objects to let them transition properly
+    endMenuEl.classList.remove("completed")
+    endMenuEl.classList.remove("waiting")
+    scoreDisplayEl.classList.remove("present")
+    endMenuEl.classList.add("present")
+    scoreDisplayEl.classList.add("waiting")
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

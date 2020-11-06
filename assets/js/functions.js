@@ -75,7 +75,7 @@ var buttonClick = function(event) {
                 if (nextQuestion > totalQuestions) {
                     // stop timer because the quiz has been completed
                     stopTimer();
-                    // make the view high scores button visibility
+                    // make the view high scores button visible
                     viewHighscoresButton.classList.toggle("display-none")
                     // update the end menu with the stats of the quiz
                     updateEndMenu();
@@ -96,8 +96,9 @@ var buttonClick = function(event) {
                 // find the score display on the page
                 var scoreDisplayEl = document.querySelector("#score-display");
 
-                // make the view high scores button visibility
+                // make the view high scores button invisible but then display the go back button 
                 viewHighscoresButton.classList.toggle("display-none")
+                goBackButton.classList.toggle("display-none")
 
                 if (scoreDisplayEl && checkInput()) {
                     // if the score display element was found and the user has entered their initials                  
@@ -122,6 +123,21 @@ var buttonClick = function(event) {
                     }
                 }    
                 break;
+            case "clear-highscores":
+                // clear the localStorage
+                localStorage.removeItem("quizScores")
+                // reset highScores to the empty local storage array
+                highScores = [];
+                // find the score display on the page
+                var scoreDisplayEl = document.querySelector("#score-display");
+                // Re-render the scoreDisplay
+                scoreDisplayEl.removeChild(scoreDisplayEl.lastChild)
+                scoreDisplayEl.appendChild(updateScoresTable(highScores));
+                break;
+            case "restart-quiz":
+                // this line of code will simply reload the page so the user starts back at the start menu
+                location.reload()
+                break;
         }
     }
 }
@@ -134,16 +150,30 @@ var highScoreClick = function() {
     var scoreDisplayEl = document.querySelector("#score-display");
     if (scoreDisplayEl) {
         viewHighscoresButton.classList.toggle("display-none")
+        goBackButton.classList.toggle("display-none")
         // Sort scores Array from greatest score to least https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
         highScores = highScores.sort(function (a, b) {
             return b.score - a.score;
         })
         // update the scores table with the ordered scoresArray
         scoreDisplayEl.appendChild(updateScoresTable(highScores))
+        // If nextQuestion is 1, that means the user never played the quiz, they just skipped to the end
+        if (nextQuestion === 1) {
+            // Make the timeRemaining 0 so their total score is 0 when the results are shown
+            timeRemaining = 0
+        }
+        // Update the endMenu witht the quiz scores
+        updateEndMenu();
         // move to scores display element
         skipToScores();
     }
 
+}
+var goBackClick = function() {
+    goBackButton.classList.toggle("display-none")
+    viewHighscoresButton.classList.toggle("display-none")
+
+    goBacktoEndMenu()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,13 +192,11 @@ var checkAnswer = function(prompt, userAnswer) {
                 // if it matched then the answer is correct
                 // increase the total right variable by one
                 totalRight++;
-                console.log("correct", totalRight)
                 // call display right or wrong function to display "Correct"
                 displayRightOrWrong(true);
             } else {
                 // call penalyty timer to subtract the timer by a certain amount
                 penaltyTimer();
-                console.log("incorrect", totalRight)
                 // call display right or wrong function to display "Correct"
                 displayRightOrWrong(false);
             }

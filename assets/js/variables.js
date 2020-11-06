@@ -29,6 +29,7 @@ var rightOrWrongElDiv = document.querySelector("#right-or-wrong-div");
 var rightOrWrongEl = document.querySelector("#right-or-wrong");
 
 var viewHighscoresButton = document.querySelector("#view-highscores");
+var goBackButton = document.querySelector("#go-back");
 
 // This is a reference to where all the content will live
 var mainContentEl = document.querySelector("#page-content");

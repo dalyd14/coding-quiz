@@ -9,12 +9,16 @@
 <body>
     <!-- Where I will allow them to view high score and the timer; I also may keep up with their score -->
     <header>
-        <div>
-            Time Remaining: <span id="time-left"></span>
-        </div>
         <a href="javascript:highScoreClick()" id="view-highscores">
             View High Scores
         </a>
+        <a href="javascript:goBackClick()" class="display-none" id="go-back">
+            Go Back
+        </a>
+        <span></span>
+        <div>
+            Time Remaining: <span id="time-left"></span>
+        </div>
     </header>
     <!-- Where I will display the questions and their answers -->
     <main class="page-content" id="page-content">
