@@ -146,7 +146,7 @@ var questionBank = [
         answer: 1
     },
     {
-        question: "What is the dirrence between console.log() and console.dir()",
+        question: "What is the difference between console.log() and console.dir()",
         options: [
             ".log can only deal with strings and .dir can deal with numbers",
             ".dir goes directly before any .log",
@@ -183,7 +183,7 @@ var questionBank = [
             "d=+3",
             "d+++"
         ],
-        answer: 1
+        answer: 0
     },
     {
         question: "Which way would not concatenate the two strings together?",
