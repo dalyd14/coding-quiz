@@ -144,6 +144,23 @@ header div {
     padding: 20px;
     margin: 5px 20%;
 }
+/* Styles for score display */
+.score-display button {
+    font-size: 25px;
+    padding: 10px;
+    margin: 5px 20%;
+}
+.score-display-grid {
+    display: flex;
+    flex-direction: column;
+}
+.score-display-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+}
+.score-display-item:nth-of-type(2n) {
+    background-color: lavender;
+}
 
 /* Style for waiting, present, complete */
 .waiting {

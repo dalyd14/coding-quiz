@@ -93,6 +93,10 @@ var buttonClick = function(event) {
                 break;
             case "submit-score-button":
                 // if the submit score button was pressed
+                // Disable the button so it cant be pressed again
+                var scoreSubmitButton = document.querySelector("#submit-score-button");
+                scoreSubmitButton.disabled = true;
+
                 // find the score display on the page
                 var scoreDisplayEl = document.querySelector("#score-display");
 

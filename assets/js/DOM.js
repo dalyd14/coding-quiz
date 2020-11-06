@@ -89,7 +89,7 @@ var endMenuSetup = function() {
         <form>
             <h4>Would you like to save the score of <span id='total-score'></span>?</h4>
             <input type="text" placeholder="Input Initials Here" class="score-initial" id="score-initial">
-            <button class="submit-score-button">Save Score</button>
+            <button class="submit-score-button" id="submit-score-button">Save Score</button>
         </form>
         <button class="restart-quiz" id="restart-quiz">Restart Quiz</button>
     `
@@ -137,7 +137,7 @@ var updateScoresTable = function(scoresArray) {
         scoreDisplayItem.className = "score-display-item present"
 
         scoreDisplayItem.innerHTML = `
-            <p class="position">` + (i + 1) + `</p>
+            <p class="position">` + (i + 1) + `: </p>
             <p class="initials">` + scoresArray[i].initials + `</p>
             <p class="score">` + scoresArray[i].score + `</p>
         `
