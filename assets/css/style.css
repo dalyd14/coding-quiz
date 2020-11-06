@@ -1,3 +1,6 @@
+:root {
+    --font1: monospace;
+}
 * {
     margin: 0;
     padding: 0;
@@ -7,204 +10,139 @@ a {
     text-decoration: none;
     color: unset;
 
-    padding: 5px;
-
-    background: aliceblue;
-    border: 1px solid black;
+    font-size: 15px;
 }
-a:active {
-    background: lightblue;
+/* General page spacing setup */
+html {
+    overflow: hidden;
 }
 html, body {
     height: 100%;
-    overflow: hidden;
+
+    font-family: var(--font1);
+
+    text-align: center;
 }
 body {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
+
+    overflow: hidden;
 }
+main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.start-menu,
+.question,
+.end-menu,
+.score-display {
+    position: absolute;
+    top: 0;
+
+    height: 100%;
+    width: 100%;
+
+    padding: 0 25%;
+
+    right: -100%;
+    transition: right 500ms;
+
+    display: flex;
+    flex-direction: column;
+}
+/* General style for displaying none */
 .display-none {
     display: none;
 }
-/* General Styles */
+/* General font-size styles */
 h1 {
-    text-align: center;
-    padding: 15px 0;
+    font-size: 40px;
+    padding: 10px 0;
 }
 h3 {
-    text-align: center;
-    padding: 5px 0;
+    font-size: 30px;
+    padding: 15px 0;
 }
 h4 {
-    text-align: center;
-    padding: 5px 0;
+    font-size: 25px;
+    padding: 20px 0;
 }
 p {
-    text-align: center;
-    padding: 5px 0;
+    font-size: 20px;
+    padding: 10px 0;
 }
-input {
-    appearance: none;
-    width: 100%;
-    padding: 5px;
-    border: 1px solid black;;
-}
-button {
-    margin: 15px 0;
-    padding: 5px;
-    width: 100%;
-    appearance: none;
 
-    background: aliceblue;
-    border: 1px solid black;
+/* Styles for buttons and anchor tags */
+button, a {
+    background: papayawhip;
+    border: 1px solid lavender;
+
+    font-family: monospace;
+    
+    padding: 10px;
+    margin: 5px;
 }
-button:active {
-    background: lightblue;
+button:hover, a:hover {
+    background: rgb(236, 213, 177);
 }
-form {
-    margin-top: 25px;
+button:active, a:active {
+    background: papayawhip;
 }
-/* Style for Header */
+
+/* Style for header */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    padding: 0 50px;
-
-    height: 10%;
-    width: 100%;
 }
-/* style for start menu */
-.start-menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    position: absolute;
-
-    padding: 0 50px;
-
-    top: 0;
-    right: 100%;
-    width: 100%;
-
-    transition: right 500ms;
-}
-.start-menu h1, .start-menu p {
-    text-align: center;
+header div {
+    font-size: 25px;
+    padding-right: 5px;
 }
 
-/* Style for questions */
 .page-content {
-    position: relative;
-
-    height: 60%;
-    width: 100%;
-
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
-.question {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    position: absolute;
-    top: 0;
-    right: 100%;
-    width: 100%;
-
-    padding: 10px 50px;
-
-    transition: right 500ms;
+/* Styles for start menu */
+.start-menu button {
+    margin: 10px 20%;
+    font-size: 25px;
 }
+
+/* Styles for Questions */
 .option-button-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
 }
-.option-button {
-    margin: 15px 0 0 0;
-    padding: 5px;
-    width: 100%;
+.option-button, .start-quiz {
+    font-size: x-large;
+    padding: 35px;
 }
-
-/* Style for End Menu */
-.end-menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    position: absolute;
-
-    padding: 0 50px;
-
-    top: 0;
-    right: 100%;
-    width: 100%;
-
-    transition: right 500ms;
-}
-.end-menu h1 {
-    text-align: center;
-}
+/* Styles for End Menu */
 .end-menu form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
 }
+.end-menu input {
+    padding: 10px;
+    margin: 5px 20%;
 
-/* Style score display */
-.score-display {
-    position: absolute;
+    appearance: none;
+    font-family: monospace;
+    font-size: 25px;
+    border: 1px solid lavender;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    right: 100%;
-    width: 100%;
-
-    padding: 0 50px;
-
-    transition: right 500ms;
+    text-align: center;
 }
-.score-display-grid {
-    display: grid;
-    width: 50%;
-}
-.score-display-item  {
-    display: grid;
-    grid-template-columns: repeat(3, 3fr);
-    grid-template-rows: 1fr;
-
-    text-align: left;
-}
-.score-display-item:nth-of-type(2n-1) {
-    background: aliceblue;
-}
-
-/* Style for footer */
-footer {
-    height: 40%;
-    width: 100%;
-}
-.right-or-wrong {
-    margin: 0 75px;
-    padding: 0 20px;
-
-    color: lightgray;
-    border-top: 1px solid lightgray;
+.end-menu button {
+    font-size: 25px;
+    padding: 20px;
+    margin: 5px 20%;
 }
 
 /* Style for waiting, present, complete */
@@ -216,36 +154,4 @@ footer {
 }
 .completed {
     right: 100%;
-
-}
-
-@media screen and (min-width: 500px) {
-    button,
-    .option-button {
-        width: 50%;
-    }
-    .start-menu,
-    .question,
-    .end-menu,
-    .score-display {
-        padding: 0 100px;
-    }
-    .end-menu form {
-        width: 80%;
-    }
-}
-@media screen and (min-width: 900px) {
-    button,
-    .option-button {
-        width: 30%;
-    }
-    .start-menu,
-    .question,
-    .end-menu,
-    .score-display {
-        padding: 0 20%;
-    }
-    .end-menu form {
-        width: 50%;
-    }
 }

@@ -124,5 +124,15 @@ var questionBank = [
             "behind-color: red"
         ],
         answer: 1
+    },
+    {
+        question: "<link> is to CSS as _______ is to JS",
+        options: [
+            "<link>",
+            "<javascript>",
+            "<function>",
+            "<script>"
+        ],
+        answer: 3
     }
 ];
