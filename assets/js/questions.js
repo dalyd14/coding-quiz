@@ -126,7 +126,7 @@ var questionBank = [
         answer: 1
     },
     {
-        question: "<link> is to CSS as _______ is to JS",
+        question: "the link tag is to CSS as _______ is to JS",
         options: [
             "<link>",
             "<javascript>",
