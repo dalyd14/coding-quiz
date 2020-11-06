@@ -134,5 +134,83 @@ var questionBank = [
             "<script>"
         ],
         answer: 3
+    },
+    {
+        question: "Which of the following is not a valid window function",
+        options: [
+            "window.alert()",
+            "window.options()",
+            "window.prompt()",
+            "window.confirm()"
+        ],
+        answer: 1
+    },
+    {
+        question: "What is the dirrence between console.log() and console.dir()",
+        options: [
+            ".log can only deal with strings and .dir can deal with numbers",
+            ".dir goes directly before any .log",
+            ".log would output an object with a string representation and .dir would output it as an object",
+            ".dir goes to the directory instead of the console"
+        ],
+        answer: 2
+    },
+    {
+        question: "How do you divide in Javascript?",
+        options: [
+            "/",
+            "^",
+            "@",
+            "*"
+        ],
+        answer: 0
+    },
+    {
+        question: "How do you multiply in Javascript?",
+        options: [
+            "/",
+            "^",
+            "@",
+            "*"
+        ],
+        answer: 3
+    },
+    {
+        question: "Which way would increase a the var d by 3?",
+        options: [
+            "d+=3",
+            "d++3",
+            "d=+3",
+            "d+++"
+        ],
+        answer: 1
+    },
+    {
+        question: "Which way would not concatenate the two strings together?",
+        options: [
+            "'string 1' + 'string 2'",
+            "'string 1'.concat('string 2')",
+            "'string 1' & 'string 2'"
+        ],
+        answer: 2
+    },
+    {
+        question: "What operation would not get the color of the car object var car = { color: 'red' }?",
+        options: [
+            "car.color",
+            "car{color}",
+            "car['color']",
+        ],
+        answer: 1
+    },
+    {
+        question: "A while() loop will continue to loop as long as ___________",
+        options: [
+            "what is inside the () remains true",
+            "the timer is still running",
+            "the user has the browser open",
+            "we are in debugger mode"
+        ],
+        answer: 0
     }
 ];
