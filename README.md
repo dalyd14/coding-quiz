@@ -1,5 +1,6 @@
 # Coding Quiz
-Weekly Assignment 04
+Weekly Assignment 04\
+[Coding Quiz Assignment](https://dalyd14.github.io/coding-quiz/)
 
 ## Deliverable
 AS A coding boot camp student\
